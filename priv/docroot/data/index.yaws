@@ -1,3 +1,10 @@
+<erl>
+	out(A) ->
+	   case gm_manager:api("check_session", A) of
+	      {ok, UserData} -> [{bindings, [{"UserData", UserData}]}];
+	      "{\"state\":\"105\"}" -> {redirect, "/userLogin/userLogin.yaws"}
+	   end.
+</erl>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -6,17 +13,23 @@ out(A) ->
 	{ssi, "../inc/head_charset.inc", "", ""}.
 </erl>
 <title>管理平台</title>
-
+</head>
+<body>
 <erl>
-out(A) ->
-	{ssi, "../inc/head_login.inc", "%%", [{"user", "test"}]}.
+	out(A) ->
+	{ServerId, PlatformId} = case gm_fun:read_config() of
+			{error, _Other} -> {"", ""};
+			{ok, [[_ServerList, GameMsg, PlatMsg]]} ->
+				{["<span title=\""++Id++"\">"++Id++"服("++Name++")</span>"||{Id, Name, _A1,_A2,_A3,_A4,_A5}<-GameMsg], ["<span title=\""++Id++"\">"++Id++"服("++Name++")</span>"||{Id, Name}<-PlatMsg]}
+		end,
+	{ssi, "../inc/nav_head_master.inc", "%%", [{"serverId", ServerId}, {"platformId", PlatformId}]}.
 </erl>
 
 <div id="content" class="wtcenter">
-	<div class="container_hd"><h2>GM工具</h2></div>
+	<div class="container_hd"><h2>数据查询</h2></div>
 	<erl>
 	out(A) ->
-		{ssi, "../inc/side_gm.inc", "%%", [{"user", "test"}]}.
+		{ssi, "../inc/side_data.inc", "%%", [{"user", "test"}]}.
 	</erl>
 	<div id="mainPanel">
 		<iframe src="data_1.yaws" scrolling="no" onload="reinitIframe('gm_iframe');" id="gm_iframe" frameborder="0"></iframe>

@@ -5,74 +5,221 @@
 out(A) ->
 	{ssi, "../inc/head_charset.inc", "", ""}.
 </erl>
-<link rel="stylesheet" type="text/css" href="../css/gm.css" />
+<link rel="stylesheet" type="text/css" href="../css/content.css" />
+<script type="text/javascript" src="../lib/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../lib/jquery-ui/jquery-ui.css" />
+<script type="text/javascript">
+var $serverId;
+var $platformId;
+var $select_option;
+$(function(){
+	$serverId = getCookie( "serverId" );	
+	if( $serverId == "all" ){
+		$("#reg_data .table_css_1 thead th:eq(1)").html( "新增帐号" );
+		$("#reg_data .table_css_1 thead th:eq(2)").html( "活跃账户数" );
+	}else{
+		$("#reg_data .table_css_1 thead th:eq(1)").html( "新增角色数" );
+		$("#reg_data .table_css_1 thead th:eq(2)").html( "活跃角色数" );
+	}
+
+	$.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd',
+        firstDay:'0',
+        maxDate:'yy-mm-dd'        
+    });
+    
+    $("#reg_stime").datepicker({
+		onSelect: function(dateText, inst){
+			$("#reg_stime").removeClass( "warn" );
+			$("#reg_etime").datepicker("option","minDate",dateText);
+			$("#reg_etime").addClass( "warn" );
+		}
+	});
+
+	$('#reg_etime').datepicker({ 
+		onSelect: function(dateText, inst){			
+			option_1();
+		}
+	});
+
+
+	$("#retention_stime").datepicker({
+		onSelect: function(dateText, inst){
+			$("#retention_stime").removeClass( "warn" );
+			$("#retention_etime").datepicker("option","minDate",dateText);
+			$("#retention_etime").addClass( "warn" );
+		}
+	});
+	$('#retention_etime').datepicker({ 
+		onSelect: function(dateText, inst){			
+			option_2();
+		}
+	});
+
+})
+
+function option_1(){
+	var $stime = $("#reg_stime").val();
+	var $etime = $("#reg_etime").val();
+	if( $stime == null || $stime == "" ){
+		$("#reg_stime").addClass( "warn" );
+	}else if( $etime == null || $etime == "" ){
+			$("#economy_etime").addClass( "warn" );
+	}else{
+		$("#reg_etime").removeClass( "warn" );
+		$select_option = $("#select_option").val();
+		
+		$serverId = getCookie( "serverId" );
+		$platformId = getCookie( "platformId" );
+
+		var sarray = $stime.split( "-" );
+		var $sdate = new Date(sarray[0],sarray[1]-1,sarray[2]);				
+		var earray = $etime.split( "-" );
+		var $edate = new Date(earray[0],earray[1]-1,earray[2]);
+
+		var $url = "/action.yaws?action=data_1&select_option="+$select_option+
+								 "&serverId="+$serverId+"&platformId="+$platformId+"&stime="+$sdate.getTime()/1000+"&etime="+$edate.getTime()/1000;
+		ajax( $url, "data_1.yaws 0" );
+	}			
+}
+function option_2(){
+	$serverId = getCookie( "serverId" );
+	if( $serverId == "all" ){
+		$("#retention_msg").show();
+		$("#retention_msg").html( "请选择一个游戏大区" );
+	}else{
+		var $stime = $("#retention_stime").val();
+		var $etime = $("#retention_etime").val();
+		if( $stime == null || $stime == "" ){
+			$("#retention_stime").addClass( "warn" );
+		}else if( $etime == null || $etime == "" ){
+				$("#economy_etime").addClass( "warn" );
+		}else{
+			$("#retention_etime").removeClass( "warn" );		
+			$select_option = $("#select_option").val();
+			
+			$serverId = getCookie( "serverId" );
+			$platformId = getCookie( "platformId" );
+
+			var sarray = $stime.split( "-" );
+			var $sdate = new Date(sarray[0],sarray[1]-1,sarray[2]);				
+			var earray = $etime.split( "-" );
+			var $edate = new Date(earray[0],earray[1]-1,earray[2]);
+
+			var $url = "/action.yaws?action=data_1&select_option="+$select_option+
+									 "&serverId="+$serverId+"&platformId="+$platformId+"&stime="+$sdate.getTime()/1000+"&etime="+$edate.getTime()/1000;
+			ajax( $url, "data_1.yaws 1" );
+		}	
+	}
+}
+
+function callback( data, callback ){
+	if(data.state == "200"){
+		if( callback == "data_1.yaws 0" ){
+			$("#reg_table tbody").html( "" );
+			$.each(data.msg, function(i, item){
+				var d=new Date(item.dayTime*1000);
+				var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.add+"</td><td>"+item.online+"</td><td>";
+				$("#reg_table tbody").append( $tr );
+	        });
+		}
+		else if( callback == "data_1.yaws 1" ){
+			$("#retention .table_css_1 tbody").html( "" );
+			$.each(data.msg, function(i, item){
+				var d=new Date(item.dayTime*1000);
+				var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.reg+"</td><td>"+item.renum_1+"</td><td>"+Number(item.re_1*100).toFixed(2)+
+					"%</td><td>"+item.renum_2+"</td><td>"+Number(item.re_2*100).toFixed(2)+"%</td><td>"+item.renum_3+"</td><td>"+Number(item.re_3*100).toFixed(2)+
+					"%</td><td>"+item.renum_4+"</td><td>"+Number(item.re_4*100).toFixed(2)+"%</td><td>"+item.renum_5+"</td><td>"+Number(item.re_5*100).toFixed(2)+
+					"%</td><td>"+item.renum_6+"</td><td>"+Number(item.re_6*100).toFixed(2)+"%</td><td>"+item.renum_7+"</td><td>"+Number(item.re_7*100).toFixed(2)+
+					"%</td><td>"+item.renum_8+"</td><td>"+Number(item.re_8*100).toFixed(2)+"%</td><td>"+item.renum_9+"</td><td>"+Number(item.re_9*100).toFixed(2)+
+					"%</td></tr>";
+				$("#retention .table_css_1 tbody").append( $tr );
+	        });
+		}
+	}
+	else{
+		alert("获取数据失败，请稍后再试！");
+	}
+	parentIframe( "gm_iframe" );
+}
 </script>
 <title>管理平台</title>
 </head>
-	<div id="gmPanel">
-		<ul>
-			<li>
-				<span>游戏角色名</span><input type="input" name="name" value=""><span style="width:12px;"></span>
-				<span>UID</span><input type="input" name="uid" value="">
-			</li>
-			<li><div class="button" style="text-align:right;padding-right:200px;"><button id="search" type="button">查询</button></div></li>
+	<div id="conPanel">
+		<ul class="title_tab">
+		    <li class="selected"><p>玩家账户</p></li>
+		    <li><p>玩家留存</p></li>
+		    <span id="loading"><img src="../images/loading.gif" style="vertical-align: middle;display:none;"/></span>
+		    <br class="clear"/>
 		</ul>
-		<h3>角色信息</h3>
-		<ul class="ul_css_2">
-			<li>
-				<p><span>排名</span><input class="width1" type="input" id="rank" value="1" readonly="true" style="background-color:#EEE"></p>
-				<p><span>等级</span><input class="width1" type="input" id="lv" value="99" readonly="true" style="background-color:#EEE"></p>
-				<p><span>充值</span><input class="width1" type="input" id="rmb" value="100" readonly="true" style="background-color:#EEE"></p>
-				<p><span>实力</span><input class="width1" type="input" id="strength" value="1000000" readonly="true" style="background-color:#EEE"></p>
-				<p><span>门派</span><input class="width1" type="input" id="gangid" value="1000000" readonly="true" style="background-color:#EEE"></p>
-				<p><input class="button1" type="button" id="search1" value="查看装备"/></p>
-				<p><input class="button1" type="button" id="search2" value="查看技能"/></p>
-				<p><input class="button1" type="button" id="search3" value="查看包裹"/></p>
-				<p><input class="button1" type="button" id="search4" value="查看任务"/></p>
-			</li>
-			<li class="li_css_2">
-				<p><span>队伍排名</span><input class="width2" type="input" id="teamrank" value="1" readonly="true" style="background-color:#EEE"></p>
-				<p><span>最大人数</span><input class="width2" type="input" id="maxnum" value="99" readonly="true" style="background-color:#EEE"></p>
-				<p><span>队伍实力</span><input class="width2" type="input" id="teamstrength" value="100" readonly="true" style="background-color:#EEE"></p>
-				<p><span>队伍人数</span><input class="width2" type="input" id="teamnum" value="1000000" readonly="true" style="background-color:#EEE"></p>
-				<p><span>队员1人  </span><input class="width2" type="input" id="team1" value="倚×天屠龙剑" readonly="true" style="background-color:#EEE"></p>
-				<p><span>队员2人   </span><input class="width2" type="input" id="team2" value="99" readonly="true" style="background-color:#EEE"></p>
-				<p><span>队员3人  </span><input class="width2" type="input" id="team3" value="100" readonly="true" style="background-color:#EEE"></p>
-				<p><span>队员4人  </span><input class="width2" type="input" id="team4" value="10000" readonly="true" style="background-color:#EEE"></p>
-				<p><span>封号状态</span><input class="width3" type="input" id="re1" value="封号" readonly="true" style="background-color:#EEE">
-															 <input class="button2" type="button" id="re1_1" value="解封" /></p>
-				<p><span>禁言状态</span><input class="width3" type="input" id="re2" value="禁言" readonly="true" style="background-color:#EEE">
-														     <input class="button2" type="button" id="re2_1" value="解禁"/></p>
-			</li>
-			<li class="li_css_3">
-				<p><span>主穴  </span><input class="width3" type="input" id="acu1" value="1" readonly="true" style="background-color:#EEE"></p>
-				<p><span>腿穴  </span><input class="width3" type="input" id="acu2" value="99" readonly="true" style="background-color:#EEE"></p>
-				<p><span>奇门穴</span><input class="width3" type="input" id="acu3" value="99" readonly="true" style="background-color:#EEE"></p>
-				<p><span>境界  </span><input class="width3" type="input" id="acu4" value="99" readonly="true" style="background-color:#EEE"></p>
-				<p><span>大殿  </span><input class="width3" type="input" id="building1" value="1" readonly="true" style="background-color:#EEE"></p>
-				<p><span>闭关  </span><input class="width3" type="input" id="building2" value="99" readonly="true" style="background-color:#EEE"></p>
-				<p><span>药园  </span><input class="width3" type="input" id="building3" value="99" readonly="true" style="background-color:#EEE"></p>
-				<p><span>药房  </span><input class="width3" type="input" id="building4" value="99" readonly="true" style="background-color:#EEE"></p>
-				<p><span>酒楼  </span><input class="width3" type="input" id="building5" value="99" readonly="true" style="background-color:#EEE"></p>
-				<p><span>铁匠铺</span><input class="width3" type="input" id="building6" value="99" readonly="true" style="background-color:#EEE"></p>
-			</li>
-			<li class="li_css_2">
-				<p><span>创建日期</span><input class="width4" type="input" id="createtime" value="2014-08-09 15:15:15" readonly="true" style="background-color:#EEE"></p>
-				<p><span>最后登录</span><input class="width4" type="input" id="logintime" value="10000" readonly="true" style="background-color:#EEE"></p>
-				<p><span>最后登出</span><input class="width4" type="input" id="loginouttime" value="10000" readonly="true" style="background-color:#EEE"></p>
-				<p><span>扫荡点</span><input class="width4" type="input" id="att1" value="1"></p>
-				<p><span>VIP   </span><input class="width4" type="input" id="att2" value="99"></p>
-				<p><span>银两  </span><input class="width4" type="input" id="att3" value="99"></p>
-				<p><span>元宝  </span><input class="width4" type="input" id="att4" value="99"></p>
-				<p><span>学点  </span><input class="width4" type="input" id="att5" value="99"></p>
-				<p><span>体力  </span><input class="width4" type="input" id="att6" value="99"></p>
-				<p><span>经验  </span><input class="width4" type="input" id="att7" value="99"></p>
-				<p><span>修为  </span><input class="width4" type="input" id="att8" value="99"></p>
-				<p><span>声望  </span><input class="width4" type="input" id="att9" value="99"></p>
-				<p><span>药材  </span><input class="width4" type="input" id="att10" value="99"></p>
-				<div class="button" style="text-align:right;padding-right:150px;"><button id="save_attr" type="button">修改以上属性</button></div>
-			</li>
-		</ul>
+		
+		<div id="reg_data">
+			<ul class="ul_css_2">
+				<li>
+					<span>时间：</span>
+					<input type="input" id="reg_stime" name="reg_stime" />
+					<span style="width:0px;"></span>
+					<input type="input" class="width2" id="reg_etime" name="reg_etime" />
+				</li>
+				<br class="clear"/>
+			</ul>
+			<h3 style="position:relative;">详细数据<span style="font-weight:normal;font-size: 14px;line-height:26px;color:red;display:none;" id="reg_msg"></span>
+				<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
+			<table class="table_css_1" id="reg_table">
+				<thead>
+					<tr>
+						<th>日期</th>
+						<th>新增帐号</th>
+						<th>活跃账户数</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td colspan="3"><p style="line-height: 50px;  ">没有相应的数据</p></td></tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="retention" style="display:none;">
+			<ul class="ul_css_2">
+				<li>
+					<span>时间：</span>
+					<input type="input" id="retention_stime" />
+					<span style="width:0px;"></span>
+					<input type="input" class="width2" id="retention_etime" />
+				</li>
+				<br class="clear"/>
+			</ul>
+			<h3 style="position:relative;">详细数据<span style="font-weight:normal;font-size: 14px;line-height:26px;color:red;display:none;" id="retention_msg"></span>
+				<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
+			<table class="table_css_1">
+				<thead>
+					<tr>
+						<th rowspan="2">当前时间</th>
+						<th rowspan="2">新增角色数</th>
+						<th colspan="18" style=" border: 1px solid rgb(232, 232, 232);">留存数/留存率</th>
+					</tr>
+					<tr>
+						<th colspan="2">次日<i></i></th>
+						<th colspan="2">2天后<i></i></th>
+						<th colspan="2">3天后<i></i></th>
+						<th colspan="2">4天后<i></i></th>
+						<th colspan="2">5天后<i></i></th>
+						<th colspan="2">6天后<i></i></th>
+						<th colspan="2">7天后<i></i></th>
+						<th colspan="2">14天后<i></i></th>
+						<th colspan="2">30天后<i></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td colspan="20"><p style="line-height: 50px;  ">没有相应的数据</p></td></tr>
+				</tbody>
+			</table>
+		</div>
+		
 	</div>
+<input type="hidden" id = "select_option" value="0" />
+<erl>
+out(A) ->
+	{ssi, "../inc/side_bg.inc", "", ""}.
+</erl>
 </body>
 </html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="../css/content.css" />
+<script type="text/javascript" src="../lib/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../lib/jquery-ui/jquery-ui.css" />
+<script type="text/javascript">
+var $serverId;
+var $platformId;
+var $select_option;
+$(function(){
+	$serverId = getCookie( "serverId" );
+	$platformId = getCookie( "platformId" );
+	
+	if( $serverId == "all" ){
+		$("#reg_data .table_css_1 thead th:eq(1)").html( "新增帐号" );
+		$("#reg_data .table_css_1 thead th:eq(2)").html( "活跃账户数" );
+		$("#reg_data .table_css_1 thead th:eq(3)").html( "新增帐号占比" );
+	}else{
+		$("#reg_data .table_css_1 thead th:eq(1)").html( "新增角色数" );
+		$("#reg_data .table_css_1 thead th:eq(2)").html( "活跃角色数" );
+		$("#reg_data .table_css_1 thead th:eq(3)").html( "新增角色占比" );
+	}
+
+	$.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd',
+        firstDay:'0',
+        maxDate:'yy-mm-dd'        
+    });
+    
+	$("#day_stime").datepicker({
+		onSelect: function(dateText, inst){
+			if( dateText == null || dateText == "" ){
+				$("#day_stime").addClass( "warn" );
+			}else{
+				$("#day_stime").removeClass( "warn" );
+				select_option = $("#select_option").val();
+
+				var day_stime_array = dateText.split( "-" );
+				var $day_stime_date = new Date(day_stime_array[0],day_stime_array[1]-1,day_stime_array[2]);
+				var $url = "/action.yaws?action=data_1&select_option="+$select_option+
+							"&serverId="+$serverId+"&platformId="+$platformId+"&stime="+$day_stime_date.getTime()/1000+"&etime=null";
+				ajax( $url, "data_1.yaws 0" );
+			}
+		}
+	});
+
+	$("#retention_stime").datepicker({
+		onSelect: function(dateText, inst){
+			$("#retention_stime").removeClass( "warn" );
+			$("#retention_etime").datepicker("option","minDate",dateText);
+			$("#retention_etime").addClass( "warn" );
+		}
+	});
+	$('#retention_etime').datepicker({ 
+		onSelect: function(dateText, inst){			
+			var $stime = $("#retention_stime").val();
+
+			if( $stime == null || $stime == "" ){
+				$("#retention_stime").addClass( "warn" );
+			}else{
+				$("#retention_etime").removeClass( "warn" );
+				select_option = $("#select_option").val();
+				
+				var sarray = $stime.split( "-" );
+				var $sdate = new Date(sarray[0],sarray[1]-1,sarray[2]);				
+				var earray = dateText.split( "-" );
+				var $edate = new Date(earray[0],earray[1]-1,earray[2]);
+
+				var $url = "/action.yaws?action=data_2&select_option="+$select_option+
+										 "&serverId="+$serverId+"&platformId="+$platformId+"&stime="+$sdate.getTime()/1000+"&etime="+$edate.getTime()/1000;
+				ajax( $url, "data_1.yaws 2" );
+			}			
+		}
+	});
+
+})
+
+function callback( data, callback ){
+	if(data.res == "ok"){
+		if( callback == "data_1.yaws 0" ){
+
+		}
+		else if( callback == "data_1.yaws 2" ){
+			$("#retention .table_css_1 tbody").html( "" );
+			$.each(data.messege, function(i, item){
+				var d=new Date(item.daytime*1000);
+				var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.reg+"</td><td>"+Number(item.retention_1*100).toFixed(2)+"%</td><td>"+
+					Number(item.retention_2*100).toFixed(2)+"%</td><td>"+Number(item.retention_3*100).toFixed(2)+"%</td><td>"+
+					Number(item.retention_4*100).toFixed(2)+"%</td><td>"+Number(item.retention_5*100).toFixed(2)+"%</td><td>"+
+					Number(item.retention_6*100).toFixed(2)+"%</td><td>"+Number(item.retention_7*100).toFixed(2)+"%</td><td>"+
+					Number(item.retention_8*100).toFixed(2)+"%</td><td>"+Number(item.retention_9*100).toFixed(2)+"%</td></tr>";
+				$("#retention .table_css_1 tbody").append( $tr );
+	        });
+		}
+	}
+	else{
+		alert("获取数据失败，请稍后再试！");
+	}
+}
+</script>
+<title>管理平台</title>
+</head>
+	<div id="conPanel">
+		<ul class="title_tab">
+		    <li class="selected"><p>关键指标</p></li>
+		    <span id="loading"><img src="../images/loading.gif" style="vertical-align: middle;display:none;"/></span>
+		    <br class="clear"/>
+		</ul>
+		<div id="day_data">
+			<ul class="ul_css_2">
+				<li>
+					<span>时间：</span><input type="input" id="day_stime" name="day_stime" /><span id="loading"><img src="../images/loading.gif" style="vertical-align: middle;display:none;"/></span>
+				</li>
+				<br class="clear"/>
+			</ul>
+			<div id="card">
+				<h3>新玩家</h3>
+				<ul>
+					<li>
+						<div class="card" id="role_1">
+							<div class="title"><h3>新增帐号</h3><div class="num">15.6%</div></div>
+							<table>                     
+								<tbody>                         
+									<tr><td><div class="histogram_wrap"><div class="histogram_chart" style="height: 50%" title="55"></div></div></td></tr>
+								</tbody>                 
+							</table>
+						</div>
+					</li>
+					<li>
+						<div class="card" id="role_2">
+							<div class="title"><h3>次日留存数</h3><div class="num">15</div></div>
+							<table><tbody><tr></tr></tbody></table>
+						</div>
+					</li>
+					<li>
+						<div class="card" id="role_3">
+							<div class="title"><h3>三日留存数</h3><div class="num">15</div></div>
+							<table><tbody><tr></tr></tbody></table>
+						</div>
+					</li>
+					<br class="clear" />
+				</ul>
+				<h3>活跃玩家</h3>
+				<ul>
+					<li>
+						<div class="card" id="day_online_1">
+							<div class="title"><h3>日活跃(DAU)</h3><div class="num">15</div></div>
+							<table><tbody><tr></tr></tbody></table>
+						</div>
+					</li>
+					<li>
+						<div class="card" id="day_online_2">
+							<div class="title"><h3>周活跃用户</h3><div class="num">15</div></div>
+							<table><tbody><tr></tr></tbody></table>
+						</div>
+					</li>
+					<li>
+						<div class="card" id="day_online_3">
+							<div class="title"><h3>双周流失账号</h3><div class="num">15.6%</div></div>
+							<table><tbody><tr></tr></tbody></table>
+						</div>
+					</li>
+					<br class="clear" />
+				</ul>
+				<h3>收入(￥)</h3>
+				<ul>
+					<li>
+						<div class="card" id="pay_1">
+							<div class="title"><h3>新增帐号</h3><div class="num">15.6%</div></div>
+							<table><tbody><tr></tr></tbody></table>
+						</div>
+					</li>
+					<li>
+						<div class="card" id="pay_2">
+							<div class="title"><h3>付费总人数</h3><div class="num">15.6%</div></div>
+							<table><tbody><tr></tr></tbody></table>
+						</div>
+					</li>
+					<li>
+						<div class="card" id="pay_3">
+							<div class="title"><h3>付费总次数</h3><div class="num">15.6%</div></div>
+							<table><tbody><tr></tr></tbody></table>
+						</div>
+					</li>
+					<br class="clear" />
+				</ul>
+			</div>
+		</div>
+		
+	</div>
+<input type="hidden" id = "select_option" value="0" />
+<erl>
+out(A) ->
+	{ssi, "../inc/side_bg.inc", "", ""}.
+</erl>
+</body>
+</html>

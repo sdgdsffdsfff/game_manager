@@ -1,0 +1,66 @@
+body{background: none;}
+
+#conPanel h3 {padding: 18px 0 8px 0;border-bottom: 2px solid #d3d3d3;}
+
+#conPanel .title_tab {line-height: 40px;border-bottom-color: #e7e7eb;box-shadow: none;-moz-box-shadow: none;-webkit-box-shadow: none;border-bottom: 1px solid #e7e7eb;}
+#conPanel .title_tab li {text-align:center;line-height: 30px;border-bottom:0px;float: left;font-size: 14px;}
+#conPanel .title_tab li.selected {background:0;border-bottom:3px solid #44b549;}
+#conPanel .title_tab li:hover {background:0;border-bottom:3px solid #A0A3AB;}
+#conPanel .title_tab .li.first p {padding-left: 30px;}
+#conPanel .title_tab li p{display: block;text-decoration: none;color: #222;outline: 0;padding: 0 20px;cursor: pointer;}
+
+#conPanel ul{width:100%;}
+#conPanel ul li{padding:6px 0;border-bottom:1px solid #eee;}
+#conPanel ul li:hover{background-color:#F7F7F7;}
+
+#conPanel ul li span{text-align:right;line-height:36px;display:inline-block;padding-right:10px;padding-left: 10px;}
+
+#conPanel input[type="input"]{height:28px;font-size:14px;border:1px solid #d9d9d9;box-sizing:border-box;padding-left:4px;}
+#conPanel input.warn{border:1px solid red;box-sizing:border-box;}
+
+#conPanel .ul_css_2 li{float:left;padding-right: 12px;}
+#conPanel .ul_css_2 input[type="input"]{width:90px;}
+#conPanel ul.ul_css_2 li .width3{width:47px;}
+#conPanel ul.ul_css_2 li .width4{width:150px;}
+
+#conPanel .ul_css_3 span{width:72px;}
+#conPanel .li_css_2 span{width: 56px;}
+#conPanel .li_css_3 span{width: 42px;}
+
+
+#conPanel .ul_css_2 input.button1{width:80px;height:29px;margin:6px 6px 6px 46px;}
+#conPanel .ul_css_2 input.button2{width:39px;height:29px;}
+
+#conPanel button[type="button"]{height:30px;line-height:26px;width:100px;margin:5px;padding:1px;background:#EEE;color: #FE6518;border: 2px solid #DDD;cursor:pointer;font-weight:bold;
+		-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px;}
+
+
+#conPanel .table_css_1{font-size: 12px;border-collapse: collapse;width:100%;margin-top:12px;text-align:center;}
+#conPanel .table_css_1 thead th {line-height: 19px;padding: 10px 15px;color: #444;border: 1px solid #e8e8e8;
+-webkit-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 1.0);
+-moz-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 1.0);
+box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 1.0);
+background: -webkit-gradient(linear, 0 0, 0 100%, from(#fafafa), to(#f3f3f3));
+background: -moz-linear-gradient(top,#fafafa,#f3f3f3);
+background: -ms-linear-gradient(top,#fafafa,#f3f3f3);
+background-color: #f5f5f5;white-space: nowrap;overflow: hidden;
+}
+#conPanel .table_css_1  td{border: 1px solid rgb(232, 232, 232);padding:4px 0px;}
+
+#conPanel #card{width:100%;}
+#conPanel #card ul{width:100%;border-bottom: 1px dashed #d0d3d8;padding:6px 0px 36px 0px;}
+#conPanel #card ul li{width:33.3%;float:left;border:0px;}
+#conPanel #card ul li .card{height:230px;margin-right: 8px;border: 1px solid #d5d7e1;background-color: #fff;overflow: hidden;}
+#conPanel #card ul li .card:hover{border-color:#9598a9;position:relative;top:-10px;}
+#conPanel #card ul li .card .title{padding: 15px 12px;}
+#conPanel #card ul li .card .title h3{font-size: 14px;font-weight: bold;border-bottom: 1px solid #e4e4e9;padding-bottom: 13px;margin-bottom: 21px;padding-top:0px;}
+#conPanel #card ul li .card .title .num{font-size: 34px;color: #3a3f48;margin-bottom: 10px;height: 24px;font-weight: bold;margin-top: 2px;line-height: 18px;white-space: nowrap;}
+/*#conPanel #card ul li .card .title .dd{font-size: 14px;color: #6c6c77;font-weight:bold;margin-top:6px;line-height:18px;}*/
+#conPanel #card ul li .card table{width:100%;border-collapse: collapse;border-spacing: 0;}
+#conPanel #card ul li .card table tbody{border-spacing:2px;border-color: gray;}
+#conPanel #card ul li .card table tr {display: table-row;vertical-align: inherit;border-color: inherit;}
+#conPanel #card ul li .card table tr td{width: auto;height:110px;;border: none;margin: 0;padding: 0;}
+#conPanel #card ul li .card table tr td .histogram_wrap{height:100%;position:relative;}
+#conPanel #card ul li .card table tr td .histogram_chart{width:100%;display:block;position:absolute;bottom:0;left:0;background-color:#daeafd;}
+#conPanel #card ul li .card table tr td .histogram_chart:hover{background-color:#2D89FE;}
+#conPanel #card ul li .card table tr td span{display:none;}

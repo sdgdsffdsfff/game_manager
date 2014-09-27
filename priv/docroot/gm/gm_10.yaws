@@ -5,10 +5,10 @@
 out(A) ->
 	{ssi, "../inc/head_charset.inc", "", ""}.
 </erl>
-<link rel="stylesheet" type="text/css" href="../css/gm.css" />
+<link rel="stylesheet" type="text/css" href="../css/content.css" />
 <title>管理平台</title>
 </head>
-	<div id="gmPanel">
+	<div id="conPanel">
 		<ul>
 			<li>
 				<span>角色名</span><input type="input" class="width2" id="startdate" name="startdate" />

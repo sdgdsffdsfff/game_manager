@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="../css/content.css" />
+<script type="text/javascript" src="../lib/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../lib/jquery-ui/zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="../lib/jquery-ui/jquery-ui.css" />
+<script type="text/javascript">
+var $serverId;
+var $platformId;
+$(function(){
+
+})
+
+function callback( data, callback ){
+	if(data.res == "ok"){
+		$("#table_css_1 tbody").html( "" );
+		$.each(data.messege, function(i, item){
+			var d=new Date(item.daytime*1000);
+			var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.reg+"</td><td>"+Number(item.retention_1*100).toFixed(2)+"%</td><td>"+
+				Number(item.retention_2*100).toFixed(2)+"%</td><td>"+Number(item.retention_3*100).toFixed(2)+"%</td><td>"+
+				Number(item.retention_4*100).toFixed(2)+"%</td><td>"+Number(item.retention_5*100).toFixed(2)+"%</td><td>"+
+				Number(item.retention_6*100).toFixed(2)+"%</td><td>"+Number(item.retention_7*100).toFixed(2)+"%</td><td>"+
+				Number(item.retention_8*100).toFixed(2)+"%</td><td>"+Number(item.retention_9*100).toFixed(2)+"%</td></tr>";
+			$("#table_css_1 tbody").append( $tr );
+
+        });
+	}
+	else{
+		alert("登录失败，请稍后再试！");
+	}
+}
+</script>
+<title>管理平台</title>
+</head>
+	<div id="conPanel">
+		<ul class="title_tab">
+		    <li class="selected"><p>等级分布</p></li>
+		    <li><p>任务分布</p></li>
+		    <li><p>关卡分布</p></li>
+		    <li><p>擂台分布</p></li>
+		    <br class="clear"/>
+		</ul>
+		<div id="pay">
+			<ul class="ul_css_2">
+				<li>
+					<span>时间：</span>
+					<input type="input" id="pay_stime" name="pay_stime" />
+					<span style="width:0px;"></span>
+					<input type="input" class="width2" id="pay_etime" name="pay_etime" />
+					<span id="loading"><img src="../images/loading.gif" style="vertical-align: middle;display:none;"/></span>
+				</li>
+				<br class="clear"/>
+			</ul>
+			<h3 style="position:relative;">详细数据<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
+			<table class="table_css_1">
+				<thead>
+					<tr>
+						<th>等级</th>
+						<th>该等级角色数量</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td colspan="2" style="padding: 4px 15px;"><p style="line-height: 50px; text-align: center; ">没有相应的数据</p></td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<input type="hidden" id = "select_option" value="0" />
+<erl>
+out(A) ->
+	{ssi, "../inc/side_bg.inc", "", ""}.
+</erl>
+</body>
+</html>

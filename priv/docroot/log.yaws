@@ -1,15 +1,17 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<erl>
+	out(A) ->
+		{ssi, "inc/head_charset.inc", "", ""}.
+	</erl>
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+	<title>更新日志</title>
+</head>
+<body>
 <erl>
 out(A) ->
-	{ssi, "inc/head_charset.inc", "", ""}.
-</erl>
-<link rel="stylesheet" type="text/css" href="css/index.css" />
-<title>更新日志</title>
-<erl>
-out(A) ->
-	{ssi, "inc/head_login.inc", "%%", [{"user", "test"}]}.
+	{ssi, "inc/nav_head_master.inc", "%%", [{"user", "test"}]}.
 </erl>
 <div id="content" class="wtcenter">
 	<div id="mainPanel">

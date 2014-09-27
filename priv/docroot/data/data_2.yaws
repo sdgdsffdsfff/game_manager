@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="../css/content.css" />
+<script type="text/javascript" src="../lib/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../lib/jquery-ui/zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="../lib/jquery-ui/jquery-ui.css" />
+<script type="text/javascript">
+var $serverId;
+var $platformId;
+$(function(){
+	$.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd',
+        firstDay:'0',
+        maxDate:'yy-mm-dd'        
+    });
+
+	$("#pay_stime").datepicker({
+		onSelect: function(dateText, inst){
+			$("#pay_stime").removeClass( "warn" );
+			$("#pay_etime").datepicker("option","minDate",dateText);
+			$("#pay_etime").addClass( "warn" );
+		}
+	});
+
+	$('#pay_etime').datepicker({ 
+		onSelect: function(dateText, inst){			
+			option_1();
+		}
+	});
+})
+
+function option_1(){
+	var $stime = $("#pay_stime").val();
+	var $etime = $("#pay_etime").val();
+	if( $stime == null || $stime == "" ){
+		$("#pay_stime").addClass( "warn" );
+	}else if( $etime == null || $etime == "" ){
+			$("#pay_etime").addClass( "warn" );
+	}else{
+		$("#pay_etime").removeClass( "warn" );
+		$select_option = $("#select_option").val();
+		
+		$serverId = getCookie( "serverId" );
+		$platformId = getCookie( "platformId" );
+
+		var sarray = $stime.split( "-" );
+		var $sdate = new Date(sarray[0],sarray[1]-1,sarray[2]);				
+		var earray = $etime.split( "-" );
+		var $edate = new Date(earray[0],earray[1]-1,earray[2]);
+
+		var $url = "/action.yaws?action=data_2&select_option="+$select_option+
+								 "&serverId="+$serverId+"&platformId="+$platformId+"&stime="+$sdate.getTime()/1000+"&etime="+$edate.getTime()/1000;
+		ajax( $url, "data_2.yaws 0" );
+	}			
+}
+
+function callback( data, callback ){
+	if(data.state == "200"){
+		if( callback == "data_2.yaws 0" ){
+			$("#pay_table tbody").html( "" );
+			$.each(data.msg, function(i, item){
+				var d=new Date(item.dayTime*1000);
+				var arpu;
+				if(item.all == 0){
+					arpu = 0;
+				}else if( item.allrole == 0 ){
+					arpu = 0;
+				}else{
+					arpu = Number(item.all/item.allrole).toFixed(2);
+				}
+
+				var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.all+"</td><td>"+item.allnum+"</td><td>"+item.allrole+"</td><td>"+arpu
+							+"</td><td>"+item.reg+"</td><td>"+item.regnum+"</td><td>"+item.regrole+"</td></tr>";
+				$("#pay_table tbody").append( $tr );
+			
+        	});
+		}
+	}
+	else{
+		alert("登录失败，请稍后再试！");
+	}
+	parentIframe( "gm_iframe" );
+}
+</script>
+<title>管理平台</title>
+</head>
+	<div id="conPanel">
+		<ul class="title_tab">
+		    <li class="selected"><p>收入</p></li>
+		    <br class="clear"/>
+		</ul>
+		<div id="pay">
+			<ul class="ul_css_2">
+				<li>
+					<span>时间：</span>
+					<input type="input" id="pay_stime"/>
+					<span style="width:0px;"></span>
+					<input type="input" class="width2" id="pay_etime"/>
+					<span id="loading"><img src="../images/loading.gif" style="vertical-align: middle;display:none;"/></span>
+				</li>
+				<br class="clear"/>
+			</ul>
+			<h3 style="position:relative;">详细数据<span style="font-weight:normal;font-size: 14px;line-height:26px;color:red;display:none;" id="pay_msg"></span>
+				<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
+			<table class="table_css_1" id="pay_table">
+				<thead>
+					<tr>
+						<th rowspan="2">当前时间</th>
+						<th colspan="4">所有用户</th>
+						<th colspan="3">新注册用户</th>
+					</tr>
+					<tr>
+						<th>总金额</th>
+						<th>付费次数</th>
+						<th>付费人数</th>
+						<th>付费ARPU</th>
+						<th>新注册付费金额</th>
+						<th>新注册付费次数</th>
+						<th>新注册付费人数</th>						
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td colspan="8" style="padding: 4px 15px;"><p style="line-height: 50px; text-align: center; ">没有相应的数据</p></td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<input type="hidden" id = "select_option" value="0" />
+<erl>
+out(A) ->
+	{ssi, "../inc/side_bg.inc", "", ""}.
+</erl>
+</body>
+</html>

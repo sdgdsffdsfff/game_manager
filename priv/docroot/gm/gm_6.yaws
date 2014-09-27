@@ -5,9 +5,9 @@
 out(A) ->
 	{ssi, "../inc/head_charset.inc", "", ""}.
 </erl>
-<link rel="stylesheet" type="text/css" href="../css/gm.css" />
-<script type="text/javascript" src="../js/jquery-ui-1.8.16.custom.min.js"></script>
-<link type="text/css" href="../css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="../css/content.css" />
+<script type="text/javascript" src="../lib/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../lib/jquery-ui/jquery-ui.css" />
 <script type="text/javascript">
 $(function(){
       $("#startdate").datepicker();
@@ -15,7 +15,7 @@ $(function(){
 </script>
 <title>管理平台</title>
 </head>
-	<div id="gmPanel">
+	<div id="conPanel">
 		<ul class="li_css_2">
 			<li><span>公告内容</span><textarea></textarea></li>
 			<li><span>开始时间</span><input class="width2" type="input" id="startdate" ></li>

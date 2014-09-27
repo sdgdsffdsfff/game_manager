@@ -1,26 +1,41 @@
 <erl>
 out(A) ->
-	Html = case gm_ctrl_cookie:login( A ) of
+	Html = case gm_manager:api("check_session", A) of
 		{ok, UserData} ->
 			case yaws_api:parse_query( A ) of
+				[{"action", "logOut"}, {"arg", "logOut"}] ->
+					gm_manager:api( "login_out", {A, "gmadmin"} );
+
 				[{"action", "gm_1_1"}, {"username", UserName}, {"uid", Uid}] ->
-					gm_ctrl_manager:api( "gm_1_1", {UserName, Uid} );
+					gm_manager:api( "gm_1_1", {UserName, Uid} );
+
+%%数据统计 data	
+				[{"action", "data_1"}, {"select_option", SelectOption}, {"serverId", ServerName}, {"platformId", PlatformName}, {"stime", Stime}, {"etime", Etime}] ->
+					gm_manager:api( "data_1", {SelectOption, ServerName, PlatformName, Stime, Etime} );
+
+				[{"action", "data_2"}, {"select_option", SelectOption}, {"serverId", ServerName}, {"platformId", PlatformName}, {"stime", Stime}, {"etime", Etime}] ->
+					gm_manager:api( "data_2", {SelectOption, ServerName, PlatformName, Stime, Etime} );
+
+
+				[{"action", "data_4"}, {"select_option", SelectOption}, {"serverId", ServerName}, {"platformId", PlatformName}|QueryData] ->
+					gm_manager:api( "data_4", {SelectOption, ServerName, PlatformName, QueryData} );
+
 				_ ->
-					"{\"res\":\"arg error\"}"
+					"{\"state\":\"201\", \"messege\":\"arg error\"}"
 			end;
-		{error, _} ->
+		"{\"state\":\"105\"}" ->
 			case yaws_api:parse_query( A ) of
 				[{"action", "login"}, {"username", UserName}, {"pwd", Pwd}] ->
-					case {UserName, Pwd} of
-						{"123", "123"} -> {cookie, yaws_api:new_cookie_session( {UserName, 1} )};
-						_ -> "{\"res\":\"error\"}"
+					case gm_manager:api( "login", {A, UserName, Pwd} ) of
+						"{\"state\":\"200\", \"msg\":\"ok\"}" -> {cookie, yaws_api:new_cookie_session( UserName )};
+						Error -> Error
 					end;
 				_ ->
-					"{\"res\":\"no cookie\"}"
+					"{\"state\":\"106\", \"messege\":\"no cookie\"}"
 			end
 	end,
 	case Html of
-		{cookie, Cookie} -> [{html, "{\"res\":\"ok\"}"}, yaws_api:setcookie("gmadmin",Cookie)];
+		{cookie, Cookie} -> [{html, "{\"state\":\"107\"}"}, yaws_api:setcookie("gmadmin",Cookie)];
 		{url, Redirect} -> [yaws_api:redirect(Redirect)];
 		_ -> {html, Html}
 	end.

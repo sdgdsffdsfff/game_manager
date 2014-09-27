@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="../css/content.css" />
+<title>管理平台</title>
+</head>
+<body>
+	<div id="conPanel">
+		<h3>帐号信息</h3>
+		<ul class="ul_css_2">
+			<li><p>管理权限：超级管理员</p></li>
+			<br class="clear">
+		</ul>
+	</div>
+</body></html>

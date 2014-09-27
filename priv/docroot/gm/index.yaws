@@ -1,8 +1,8 @@
 <erl>
 	out(A) ->
-	   case gm_ctrl_cookie:login(A) of
+	   case gm_manager:api("check_session", A) of
 	      {ok, UserData} -> [{bindings, [{"UserData", UserData}]}];
-	      {error, _} -> {redirect, "/userLogin/userLogin.yaws"}
+	      "{\"state\":\"105\"}" -> {redirect, "/userLogin/userLogin.yaws"}
 	   end.
 </erl>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -13,10 +13,16 @@ out(A) ->
 	{ssi, "../inc/head_charset.inc", "", ""}.
 </erl>
 <title>管理平台</title>
-
+</head>
+<body>
 <erl>
-out(A) ->
-	{ssi, "../inc/head_login.inc", "%%", [{"user", "test"}]}.
+	out(A) ->
+	{ServerId, PlatformId} = case gm_fun:read_config() of
+			{error, _Other} -> {"", ""};
+			{ok, [[_ServerList, GameMsg, PlatMsg]]} ->
+				{["<span title=\""++Id++"\">"++Id++"服("++Name++")</span>"||{Id, Name, _A1,_A2,_A3,_A4,_A5}<-GameMsg], ["<span title=\""++Id++"\">"++Id++"服("++Name++")</span>"||{Id, Name}<-PlatMsg]}
+		end,
+	{ssi, "../inc/nav_head_master.inc", "%%", [{"serverId", ServerId}, {"platformId", PlatformId}]}.
 </erl>
 
 <div id="content" class="wtcenter">

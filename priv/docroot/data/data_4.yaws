@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="../css/content.css" />
+<script type="text/javascript" src="../lib/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../lib/jquery-ui/zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="../lib/jquery-ui/jquery-ui.css" />
+<script type="text/javascript">
+var $serverId;
+var $platformId;
+var $select_option;
+var gold;
+var rmb;
+var learn;
+var item;
+var mate;
+var skill;
+var itemName;
+$(function(){
+	 $.ajax({
+        url:"/lib/key_value.json",
+        dataType: "json",
+        error:function(){
+            alert( "链接服务器失败，请稍后重试！" );
+        },
+        success:function(data){
+            gold = data.gold;
+            rmb = data.rmb;
+            learn = data.learn;
+            item = data.item;
+            mate = data.mate;
+            skill = data.skill;
+        }
+    })
+
+	$.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd',
+        firstDay:'0',
+        maxDate:'yy-mm-dd'        
+    });
+	option_1();
+
+	$("#economy_stime").datepicker({
+		onSelect: function(dateText, inst){
+			$("#economy_stime").removeClass( "warn" );
+			$("#economy_etime").datepicker("option","minDate",dateText);
+			$("#economy_etime").addClass( "warn" );
+		}
+	});
+	$('#economy_etime').datepicker({ 
+		onSelect: function(dateText, inst){
+			option_2();
+		}
+	});
+	$("#prop_option").change(function(){
+		var $prop_option = $("#prop_option").val();
+		if( $prop_option == "all" ){
+			return false;
+		}else{
+			option_3();
+		}
+	});
+})
+
+function option_1(){
+	$serverId = getCookie( "serverId" );
+	$platformId = getCookie( "platformId" );
+	if( $serverId == "all" ){
+		$("#currency_msg").show();
+		$("#currency_msg").html( "请选择一个游戏大区" );
+	}else{
+		$("#currency_msg").hide();
+		$select_option = $("#select_option").val();
+		var $url = "/action.yaws?action=data_4&select_option="+$select_option+"&serverId="+$serverId+"&platformId="+$platformId;
+		ajax( $url, "data_4.yaws 0" );
+	}	
+}
+
+function option_2(){
+	$serverId = getCookie( "serverId" );
+	if( $serverId == "all" ){
+		$("#economy_msg").show();
+		$("#economy_msg").html( "请选择一个游戏大区" );
+	}else{
+		var $stime = $("#economy_stime").val();
+		var $etime = $("#economy_etime").val();
+		$("#economy_msg").hide();
+		if( $stime == null || $stime == "" ){
+			$("#economy_stime").addClass( "warn" );
+		}else if( $etime == null || $etime == "" ){
+			$("#economy_etime").addClass( "warn" );
+		}else{
+
+			$("#economy_etime").removeClass( "warn" );
+			var $economy_option = $("#economy_option").val();
+			$select_option = $("#select_option").val();
+			
+			var sarray = $stime.split( "-" );
+			var $sdate = new Date(sarray[0],sarray[1]-1,sarray[2]);				
+			var earray = $etime.split( "-" );
+			var $edate = new Date(earray[0],earray[1]-1,earray[2]);
+
+			var $url = "/action.yaws?action=data_4&select_option="+$select_option+
+									 "&serverId="+$serverId+"&platformId="+$platformId+"&option="+$economy_option+
+									 "&stime="+$sdate.getTime()/1000+"&etime="+$edate.getTime()/1000;
+			ajax( $url, "data_4.yaws 1" );
+		}		
+	}	
+}
+function option_3(){
+	$serverId = getCookie( "serverId" );
+	if( $serverId == "all" ){
+		$("#prop_msg").show();
+		$("#prop_msg").html( "请选择一个游戏大区" );
+	}else{
+		$("#prop_msg").hide();
+		$select_option = $("#select_option").val();
+		var $prop_option = $("#prop_option").val();
+		var $url = "/action.yaws?action=data_4&select_option="+$select_option+"&serverId="+$serverId+"&platformId="+$platformId+"&prop_option="+$prop_option;
+		ajax( $url, "data_4.yaws 2" );
+	}
+}
+function callback( data, callback ){
+	if(data.state == "200"){
+		if( callback == "data_4.yaws 0" ){
+			$.each( data.msg,function(i, item){
+				$("#currency_1").html( item.currency_1 );
+				$("#currency_2").html( item.currency_2 );
+				$("#currency_3").html( item.currency_3 );
+				$("#currency_4").html( item.currency_4 );
+        	});
+			
+		}else if( callback == "data_4.yaws 1" ){
+			$("#economy_table tbody").html( "" );
+			var $economy_option = $("#economy_option").val();
+			var Json;
+			if( $economy_option == "0" ){
+				Json = gold;
+			}else if($economy_option == "1"){
+				Json = rmb;
+			}else if( $economy_option == "2" ){
+				Json = learn;
+			}
+			$.each(data.msg, function(i, item){
+				getValue( item.id, Json );
+				if( itemName == "undefined" || itemName == undefined ){
+					itemName = item.id;
+				}
+				var $tr = "<tr><td>"+itemName+"</td><td>"+item.num+"</td></tr>";
+				$("#economy_table tbody").append( $tr );
+	        });
+		}else if( callback == "data_4.yaws 2" ){
+			$("#prop_table tbody").html( "" );
+			var $prop_option = $("#prop_option").val();
+			var Json;
+			if( $prop_option == "0" ){
+				Json = item;
+			}else if($prop_option == "1"){
+				Json = skill;
+			}else if( $prop_option == "2" ){
+				Json = mate;
+			}
+			$.each(data.msg, function(i, item){
+				getValue( item.id, Json );
+				if( itemName == "undefined" || itemName == undefined ){
+					itemName = item.id;
+				}
+				var $tr = "<tr><td>"+itemName+"</td><td>"+item.num+"</td></tr>";
+				$("#prop_table tbody").append( $tr );
+	        });
+        }else{
+        	alert( "other case" );
+        }
+
+	}
+	else{
+		alert("访问服务器出现问题，请稍后再试！");
+	}
+	parentIframe( "gm_iframe" );
+}
+
+function getValue( Key, Json ){
+	itemName = undefined;
+    $.each( Json,function(i, item){
+        if( item.id == Key ){
+            itemName = item.name;
+            return false;
+        }
+    });
+}
+</script>
+<title>管理平台</title>
+</head>
+	<div id="conPanel">
+		<ul class="title_tab">
+			<li class="selected"><p>货币消耗</p></li>
+		    <li><p>游戏经济</p></li>
+		    <li><p>道具总量</p></li>
+		    <span id="loading"><img src="../images/loading.gif" style="vertical-align: middle;display:none;"/></span>
+		    <br class="clear"/>
+		</ul>
+		<div id="currency">
+			<h3 style="position:relative;">详细数据<span style="font-weight:normal;font-size: 14px;line-height:26px;color:red;display:none;" id="currency_msg"></span>
+				<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
+			<table class="table_css_1">
+				<thead>
+					<tr>
+						<th>货币类型</th>
+						<th>货币总量</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td>元宝</td><td id="currency_1">没有相应的数据</td></tr>
+					<tr><td>银两</td><td id="currency_2">没有相应的数据</td></tr>
+					<tr><td>学点</td><td id="currency_3">没有相应的数据</td></tr>
+					<tr><td>药材</td><td id="currency_4">没有相应的数据</td></tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="economy" style="display:none;">
+			<ul class="ul_css_2">
+				<li>
+					选择货币：
+					<select style="height:28px;" id="economy_option">
+						<option value="0" selected>银两</option>
+						<option value="1">元宝</option>
+						<option value="2">学点</option>
+					</select>
+					<span>时间：</span>
+					<input type="input" id="economy_stime" />
+					<span style="width:0px;"></span>
+					<input type="input" class="width2" id="economy_etime" />
+				</li>
+				<br class="clear"/>
+			</ul>
+			<h3 style="position:relative;">详细数据<span style="font-weight:normal;font-size: 14px;line-height:26px;color:red;display:none;" id="economy_msg"></span>
+				<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
+			<table class="table_css_1" id="economy_table">
+				<thead>
+					<tr>
+						<th>类型</th>
+						<th>总量</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="2"><p style="line-height: 50px;">请选择时间</p></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="prop" style="display:none;">
+			<ul class="ul_css_2">
+				<li>
+					<span>选择道具类型：</span>
+					<select style="height:28px;" id="prop_option">
+						<option value="all" selected>请选择</option>
+						<option value="0">背包道具</option>
+						<option value="1">角色技能</option>
+						<option value="2">角色弟子</option>
+					</select>
+				</li>
+				<br class="clear"/>
+			</ul>
+			<h3 style="position:relative;">详细数据<span style="font-weight:normal;font-size: 14px;line-height:26px;color:red;display:none;" id="prop_msg"></span>
+				<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right:12px;">导出CVX</span></h3>
+			<table class="table_css_1" id="prop_table">
+				<thead>
+					<tr>
+						<th>道具名称</th>
+						<th>道具总量</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="2"><p style="line-height: 50px;">没有相应的数据</p></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+	</div>
+	<input type="hidden" id = "select_option" value="0" />
+<erl>
+out(A) ->
+	{ssi, "../inc/side_bg.inc", "", ""}.
+</erl>
+</body>
+</html>

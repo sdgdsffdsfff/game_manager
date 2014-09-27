@@ -1,46 +1,62 @@
 ﻿<erl>
 	out(A) ->
-	   case gm_ctrl_cookie:login(A) of
-	      {ok, _UserData} -> {redirect, "../index.yaws"};
-	      {error, _} -> {html, ""}
+	    RedirectUrl = 
+	    	case (A#arg.headers)#headers.referer of
+	      		undefined -> "/";
+	      		Url -> Url
+	      	end,
+	   case gm_manager:api("check_session", A) of
+	      {ok, UserData} ->
+	      		{redirect, "/"};
+	      "{\"state\":\"105\"}" ->
+	      		[{bindings, [{"RedirectUrl", RedirectUrl}]}]
 	   end.
 </erl>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<script type="text/javascript" src="/js/jquery-1.4.2.js"></script>
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/public.js"></script>
 	<script type="text/javascript">
-		$(function(){
-			$("#login").click(function(){
-				var $userName = $("#username input").val();
-				var $pwd = $("#password input").val()
-				if( $userName == "" )
-				{
-					$("#username p").show();
-					return false;
-				}
-				if( $pwd == "" )
-				{
-					$("#password p").show();
-					return false;
-				}
-				var $url = "../action.yaws?action=login&username="+$userName+"&pwd="+$pwd;
-				ajax( $url, "login" )
-
-		      });
-			$("#login :input").focus(function(){
-					$(this).addClass("focus");
-					$(this).next().hide();
-				}).blur(function(){
-					$(this).removeClass("focus");
-			});
-		})
+	var $userName = getCookie( "userName" );
+	if( $userName != null && $userName != "" ){
+		var $pwd = getCookie( "pwd" );
+		var $url = "../action.yaws?action=login&username="+$userName+"&pwd="+$pwd;
+		ajax( $url, "userLogin.yaws" );
+	}
+	$(function(){
+		$("#login").click(function(){
+			var $userName = $("#username input").val();
+			var $pwd = $("#password input").val()
+			if( $userName == "" )
+			{
+				$("#username p").show();
+				return false;
+			}
+			if( $pwd == "" )
+			{
+				$("#password p").show();
+				return false;
+			}
+			var $url = "../action.yaws?action=login&username="+$userName+"&pwd="+$pwd;
+			if( document.getElementById("checkbox").checked ){
+				setCookie( "userName", $userName, 365 );
+				setCookie( "pwd", $pwd, 365 );
+			}
+			ajax( $url, "userLogin.yaws" );
+	      });
+		$("#login :input").focus(function(){
+				$(this).addClass("focus");
+				$(this).next().hide();
+			}).blur(function(){
+				$(this).removeClass("focus");
+		});
+	})
 	function callback( data, callback ){
-		if(data.res == "ok"){
+		if(data.state == "107"){
 			$("#message").show();
-			window.location.href="/";
+			window.location.href="%%RedirectUrl%%";
 		}
 		else{
 			$("#message").show();
@@ -132,7 +148,7 @@ border-top:1px solid silver;box-sizing:border-box;background:white;padding-left:
 						</label>		
 					</td></tr>
 					<tr><td width="60"><input type="button" value="登陆" id="login" /></td>
-						<td><input type="checkbox" name="mem_pass" /><span>保持登录状态</span>
+						<td><input type="checkbox" name="mem_pass" id="checkbox" /><span>保持登录状态</span>
 						<p style="color:red;display:none;margin-top:10px;">请输入您的账户名</p></td>
 					</tr>
 					<tr id="message" class="dis"><td colspan="2"><p style="color:red;margin-top:10px;">登录成功</p></td></tr>

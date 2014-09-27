@@ -1,15 +1,3 @@
-<script type="text/javascript">
-$(function(){
-	$("#sidePanel ul li").click(function(){
-		var $index = $(this).index();
-		$("#sidePanel ul li").removeClass( "selected" );
-		$("#sidePanel ul li").eq($index).addClass( "selected" );
-		var $iframeUrl = $("#sidePanel ul li").eq($index).attr( "data" );
-		$("#gm_iframe").attr( "src", $iframeUrl );
-		
-	});
-})
-</script>
 <div id="sidePanel">
 	<ul>
 		<li class="selected" data="gm_1.yaws"><p>角色信息管理</p></li> 

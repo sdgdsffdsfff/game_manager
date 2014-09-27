@@ -5,7 +5,7 @@
 out(A) ->
 	{ssi, "../inc/head_charset.inc", "", ""}.
 </erl>
-<link rel="stylesheet" type="text/css" href="../css/gm.css" />
+<link rel="stylesheet" type="text/css" href="../css/content.css" />
 <title>管理平台</title>
 <script type="text/javascript">
 $(function(){
@@ -31,7 +31,7 @@ function callback( data, callback ){
 		var $html="";
 		 $.each(data.res, function(i, $item){
 		 	$tabli += "<li><p>"+$item.name+"</p></li>";
-		 	$html +="<ul class='ul_css_gm1_2'><li>"+
+		 	$html +="<ul class='ul_css_2'><li>"+
 		 			"<p><span>名称</span><input  type='input' class='name_1' value='"+$item.name+"' readonly='true' style='background-color:#EEE'></p>"+
 				 	"<p><span>UID</span><input  type='input' class='uid_1' value='"+$item.uid+"' readonly='true' style='background-color:#EEE'></p>"+
 				 	"<p><span>排名</span><input  type='input' class='rank' value='"+$item.rank+"' readonly='true' style='background-color:#EEE'></p>"+
@@ -94,7 +94,7 @@ function callback( data, callback ){
 }
 </script>
 </head>
-	<div id="gmPanel">
+	<div id="conPanel">
 		<ul>
 			<li>
 				<span>角色名</span><input type="input" name="name" value="" id="name"><span></span>
@@ -107,7 +107,7 @@ function callback( data, callback ){
 		    <br class="clear"/>
 		</ul>
 		<div id="role_info">
-				<ul class="ul_css_gm1_2">
+				<ul class="ul_css_2">
 			<li>
 				<p><span>名称</span><input type="input" class="name_1" value="" readonly="true" style="background-color:#EEE"></p>
 				<p><span>UID</span><input type="input" class="uid_1" value="" readonly="true" style="background-color:#EEE"></p>

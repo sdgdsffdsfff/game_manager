@@ -5,9 +5,9 @@
 out(A) ->
 	{ssi, "../inc/head_charset.inc", "", ""}.
 </erl>
-<link rel="stylesheet" type="text/css" href="../css/gm.css" />
-<script type="text/javascript" src="../js/jquery-ui-1.8.16.custom.min.js"></script>
-<link type="text/css" href="../css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<script type="text/javascript" src="../lib/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../lib/jquery-ui/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="../css/content.css" />
 <script type="text/javascript">
 $(function(){
       $("#startdate").datepicker();
@@ -16,7 +16,7 @@ $(function(){
 </script>
 <title>管理平台</title>
 </head>
-	<div id="gmPanel">
+	<div id="conPanel">
 		<ul class="css_1">
 			<li>
 				<span>游戏角色名</span><input type="input" name="name" value=""><span style="width:12px;"></span>

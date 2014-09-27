@@ -5,11 +5,11 @@
 out(A) ->
 	{ssi, "../inc/head_charset.inc", "", ""}.
 </erl>
-<link rel="stylesheet" type="text/css" href="../css/gm.css" />
+<link rel="stylesheet" type="text/css" href="../css/content.css" />
 </script>
 <title>管理平台</title>
 </head>
-	<div id="gmPanel">
+	<div id="conPanel">
 		<ul class="ul_css_gm5_1">
 			<li><span>邮件标题</span><input type="input" name="name" value=""></li>
 			<li><span>邮件内容</span><textarea></textarea>
