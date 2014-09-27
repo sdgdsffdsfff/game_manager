@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="../css/gm.css" />
+<title>管理平台</title>
+</head>
+	<div id="gmPanel">
+		<ul>
+			<li>
+				<span>角色名</span><input type="input" class="width2" id="startdate" name="startdate" />
+				<span>Uid</span><input type="input" class="width2" id="enddate" name="enddate" />
+				<span>
+					<select>
+						<option value="all">所有停封玩家</option>
+						<option value="128001">所有禁言玩家</option>
+					</select>
+				</span>
+			</li>
+			<li><div class="button" style="text-align:right;padding-right:320px;"><button id="search" type="button">查询</button></div></li>
+		</ul>
+		<h3 style="position: relative;">封禁查询列表<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
+		<div style="max-height:500px;overflow:auto;text-align:center;line-heght:1.5;">
+			<table border="0" cellspacing="1" bgcolor="#99BBE8">
+				<tr>
+					<td bgcolor="#DAE7F6" width="14%">Uid</td>
+					<td bgcolor="#DAE7F6" width="14%">角色名</td>
+					<td bgcolor="#DAE7F6" width="14%">到期时间</td>
+					<td bgcolor="#DAE7F6" width="14%">类型</td>
+					<td bgcolor="#DAE7F6" width="14%">门派</td>
+					<td bgcolor="#DAE7F6" width="14%">等级</td>
+					<td bgcolor="#DAE7F6" width="14%">VIP</td>
+					
+				</tr>
+				<tr>
+					<td bgcolor="#DAE7F6">1</td>
+					<td bgcolor="#DAE7F6">荣耀至尊</td>
+					<td bgcolor="#DAE7F6">2014-09-30 15:15:15</td>					
+					<td bgcolor="#DAE7F6">停封</td>
+					<td bgcolor="#DAE7F6">武当</td>
+					<td bgcolor="#DAE7F6">15</td>
+					<td bgcolor="#DAE7F6">8</td>
+					
+				</tr>
+			</table>
+		</div>
+		<div style="margin-top:10px;margin-bottom:10px;"><span>上一页</span><span>下一页</span></div>
+
+		<ul>
+			<li>
+				<span>角色</span><input class="width1" type="input" id="rank" value="1" readonly="true" style="background-color:#EEE"/>
+				<span>Uid</span><input class="width1" type="input" id="rank" value="1" readonly="true" style="background-color:#EEE"/>
+			</li>
+			<li><span>封号状态</span><input type="input" id="rank" value="1" readonly="true" style="background-color:#EEE"/><button id="search" type="button">解封</button></li>
+			<li><span>禁言状态</span><input type="input" id="rank" value="1" readonly="true" style="background-color:#EEE"/><button id="search" type="button">解禁</button></li>
+		</ul>
+	</div>
+</body>
+</html>

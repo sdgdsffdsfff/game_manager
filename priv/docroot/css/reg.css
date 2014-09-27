@@ -1,0 +1,19 @@
+*{padding:0px;margin:0px;}
+body{font-family:arial,sans-serif;padding:13px 15px 15px;background-color:#FFFFFF;font-size:9pt;}
+#body{width:760px;}
+#body .logo{height:70px;padding-left:50px;}
+#body .login{margin:20px 0;}
+#body table th{text-align:right;padding-top:10px;padding-right:12px;width:110px;}
+#body table td{padding:5px 0;}
+table tr{height:40px;}
+#body table td .info{color:#6F6F6F;font-family:arial,sans-serif;font-size:smaller;}
+em{
+	font-style:normal;
+	padding-left:20px;
+        margin-left:10px;
+}
+em.error{color:#FF0000;background:url(../images/check.gif) -135px -185px no-repeat;}
+em.success{color:green;background:url(../images/check.gif) -135px -146px no-repeat;}
+
+#reg input[type="text"], #reg input[type="password"] {width:300px;height:28px;font-size:15px;border:1px solid #d9d9d9;
+border-top:1px solid silver;box-sizing:border-box;background:white;padding-left:4px;line-height:20px;}

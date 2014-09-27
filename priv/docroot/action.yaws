@@ -1,0 +1,27 @@
+<erl>
+out(A) ->
+	Html = case gm_ctrl_cookie:login( A ) of
+		{ok, UserData} ->
+			case yaws_api:parse_query( A ) of
+				[{"action", "gm_1_1"}, {"username", UserName}, {"uid", Uid}] ->
+					gm_ctrl_manager:api( "gm_1_1", {UserName, Uid} );
+				_ ->
+					"{\"res\":\"arg error\"}"
+			end;
+		{error, _} ->
+			case yaws_api:parse_query( A ) of
+				[{"action", "login"}, {"username", UserName}, {"pwd", Pwd}] ->
+					case {UserName, Pwd} of
+						{"123", "123"} -> {cookie, yaws_api:new_cookie_session( {UserName, 1} )};
+						_ -> "{\"res\":\"error\"}"
+					end;
+				_ ->
+					"{\"res\":\"no cookie\"}"
+			end
+	end,
+	case Html of
+		{cookie, Cookie} -> [{html, "{\"res\":\"ok\"}"}, yaws_api:setcookie("gmadmin",Cookie)];
+		{url, Redirect} -> [yaws_api:redirect(Redirect)];
+		_ -> {html, Html}
+	end.
+</erl>

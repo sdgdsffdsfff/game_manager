@@ -1,0 +1,16 @@
+#content{margin:20px auto;}
+
+#content #mainPanel{float:left;padding:20px;width:624px;border-right:1px solid #d3d3d3;}
+#content #mainPanel h2 {color:#e00400;}
+#content #mainPanel .todoList{ margin-top:40px;}
+#content #mainPanel .todoList p{padding-bottom:10px;border-bottom:1px solid #d3d3d3;}
+#content #mainPanel .svg{width:100%;height:300px;background:#FFF;margin:20px auto 0 auto;}
+
+#content #extendPanel{float:right;width:275px;padding:20px 20px 20px 0;}
+
+#content #extendPanel .ex_top{ background:url(../images/bg_sb_top.png) no-repeat top; height:5px;}
+#content #extendPanel .ex_cen{ background:url(../images/bg_sb_main.png) repeat-y;}
+#content #extendPanel .ex_bot{ background:url(../images/bg_sb_bot.png) no-repeat bottom;height: 6px;}
+
+#content #extendPanel h3, #content #extendPanel p{padding:9px 25px 9px 40px;color: #666;}
+#content #extendPanel .cen .item_top{height:1px;background: url(../images/bg_sb_shortline.png) no-repeat; margin:5px 0;}

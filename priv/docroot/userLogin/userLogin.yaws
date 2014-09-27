@@ -1,0 +1,150 @@
+﻿<erl>
+	out(A) ->
+	   case gm_ctrl_cookie:login(A) of
+	      {ok, _UserData} -> {redirect, "../index.yaws"};
+	      {error, _} -> {html, ""}
+	   end.
+</erl>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="/js/jquery-1.4.2.js"></script>
+	<script type="text/javascript" src="/js/public.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#login").click(function(){
+				var $userName = $("#username input").val();
+				var $pwd = $("#password input").val()
+				if( $userName == "" )
+				{
+					$("#username p").show();
+					return false;
+				}
+				if( $pwd == "" )
+				{
+					$("#password p").show();
+					return false;
+				}
+				var $url = "../action.yaws?action=login&username="+$userName+"&pwd="+$pwd;
+				ajax( $url, "login" )
+
+		      });
+			$("#login :input").focus(function(){
+					$(this).addClass("focus");
+					$(this).next().hide();
+				}).blur(function(){
+					$(this).removeClass("focus");
+			});
+		})
+	function callback( data, callback ){
+		if(data.res == "ok"){
+			$("#message").show();
+			window.location.href="/";
+		}
+		else{
+			$("#message").show();
+			$("#message td p").text("登录失败，请稍后再试！");	
+		}
+	}
+	</script>
+	<link rel="stylesheet" type="text/css" href="../css/public.css" />
+	<title>账户登陆</title>
+	<style type="text/css">
+		body{background: none;}
+		#body{width:760px;min-height:800px;margin:0 auto;}
+		#login-left {float:left;width:480px;}
+		#login-left .text div{width:80%;}
+		#login-left .text div h3{color:#565656;font-size:15px;line-height:3;}
+		#login-left .text div p{color:#575757;line-height:1.5;}
+
+		#login-right{float:right;margin:-22px 0 10px;width:260px;background:#f1f1f1;border:1px solid #E5E5E5;}
+		#login-right .right-top{margin-bottom:12px;padding:10px;}
+		#login-right #reg{margin-top:12px;}
+		#login-right #login_info{width:100%}
+		#login-right h3{font-weight:normal;line-height:3;}
+		#login-right strong{color:#222;}
+		#login-right label {display: block;margin: 0 0 15px 0;}
+		#login-right #no_user, #no_password{color:#FF0000;}
+		#login-right .red_border{border:1px solid #ff0000 !important;}
+		#login-right .focus{border:1px solid #4D90FE!important;}
+
+		#login-right .user, #login-right .pass {font-weight: bold;margin: 0 0 .5em;display: block;}
+		#login-right input[type="text"], #login-right input[type="password"] {width:100%;height:28px;font-size:15px;border:1px solid #d9d9d9;
+border-top:1px solid silver;box-sizing:border-box;background:white;padding-left:4px;line-height:20px;}
+	</style>
+	</head>
+<body>
+	<div id="header">
+		<div class="head">
+		   <ul class="nav">
+		      <li><a href="http://ldp.showgames.cn/index.jsp" title="index"><span class="title_head"></span><span class="title">首页</span></a></li>
+		      <li><a href="http://ldp.showgames.cn/download.jsp" title="baike"><span class="title_head"></span><span class="title">下载专区</span></a></li>
+		      <li><a href="http://ldp.showgames.cn/material.jsp" title="health"><span class="title_head"></span><span class="title">游戏资料</span></a></li>
+		      <li><a href="http://ldpbbs.showgames.cn/forum.php" title="circum"><span class="title_head"></span><span class="title">游戏论坛</span></a></li>
+		      <li><a href="" title="shopping"><span class="title_head"></span><span class="title">关于</span></a></li>
+		   </ul>
+		</div>
+	</div>
+   	<div id="body">
+   		<div id="logo" style="margin-bottom:24px;">
+   			<a href="/"><img border="0'" width="137" height="80" src="../images/logo.png" alt="logo"></a>
+   			<span style="font-size:16px;font-weight:bold;">游戏后台管理系统</span>
+   		</div>
+   		<div id="login-left">
+	      <div class="text">
+			<div>
+			   <h3>gm管理工具</h3>
+			   <p>实时查询玩家信息、发送道具给玩家、实时获取服务器信息......</p>
+			</div>
+			<div>
+			   <h3>后台数据统计</h3>
+			   <p>统计玩家的数据信息</p>
+			</div>
+      </div>
+   		</div>
+   		<div id="login-right" style="position:relative;">
+			<div class="right-top">
+		<div id="register">
+			<p style="line-height:2;">还没有账户？</p>
+			<div style="margin-top:6px;" align="center" >
+				<a href="reg.yaws">现在就注册一个帐户</a>
+			</div>
+			<hr size="0" style="border-top:1px solid #AAAAAA; margin:8px 0px;">
+		</div>
+			<h3>登陆</h3>
+			<table id="login_info">
+				<tbody>
+					<tr>
+					    <td colspan="2">
+						<label id="username" >
+						   <strong class="pass">用户名</strong>
+						   <input type="text" name="userlogin" >
+						   <p style="color:red;display:none;margin-top:10px;">请输入您的账户名</p>
+						</label>
+					    </td>
+					</tr>
+					<tr><td colspan="2">
+						<label id="password" >
+						  <strong class="pass">密码</strong>
+						  <input type="password" name="password" >
+						  <p style="color:red;display:none;margin-top:10px;">请输入您的密码。</p>
+						</label>		
+					</td></tr>
+					<tr><td width="60"><input type="button" value="登陆" id="login" /></td>
+						<td><input type="checkbox" name="mem_pass" /><span>保持登录状态</span>
+						<p style="color:red;display:none;margin-top:10px;">请输入您的账户名</p></td>
+					</tr>
+					<tr id="message" class="dis"><td colspan="2"><p style="color:red;margin-top:10px;">登录成功</p></td></tr>
+				</tbody>
+			</table>
+			</div>
+   		</div>
+	<br class="clear"/>
+	</div>
+	<erl>
+	out(A) ->
+		{ssi, "../inc/foot.inc", "", ""}.
+	</erl>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="../css/gm.css" />
+</script>
+<title>管理平台</title>
+</head>
+	<div id="gmPanel">
+		<ul class="li_css_2">
+			<li>
+				<span>总在线量</span><input type="input" name="name" value="" readonly="true" style="background-color:#EEE"><span style="width:12px;"></span>
+				<span>开服数量</span><input type="input" name="uid" value="" readonly="true" style="background-color:#EEE">
+			</li>
+		</ul>
+		<h3 style="position: relative;">所有游戏服<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
+		<div style="max-height:500px;overflow:auto;text-align:center;line-heght:1.5;">
+			<table border="0" cellspacing="1" bgcolor="#99BBE8">
+				<tr>
+					<td bgcolor="#DAE7F6" width="40px">ID</td>
+					<td bgcolor="#DAE7F6" width="80px">游戏服名称</td>
+					<td bgcolor="#DAE7F6" width="60px">在线人数</td>
+					<td bgcolor="#DAE7F6" width="60px">状态</td>
+					<td bgcolor="#DAE7F6" width="240px">描述</td>
+					<td bgcolor="#DAE7F6" width="60px">是否默认</td>
+					<td bgcolor="#DAE7F6" width="60px">最大人数</td>
+					<td bgcolor="#DAE7F6" width="60px">ip</td>
+					<td bgcolor="#DAE7F6" width="60px">port</td>
+					
+				</tr>
+				<tr>
+					<td bgcolor="#DAE7F6">1</td>
+					<td bgcolor="#DAE7F6">荣耀至尊</td>
+					<td bgcolor="#DAE7F6">123</td>
+					<td bgcolor="#DAE7F6">爆满</td>
+					<td bgcolor="#DAE7F6">6区，火爆新服，恭候入驻</td>
+					<td bgcolor="#DAE7F6">否</td>
+					<td bgcolor="#DAE7F6">1500</td>
+					<td bgcolor="#DAE7F6">192.168.0.219</td>
+					<td bgcolor="#DAE7F6">8083</td>
+					
+				</tr>
+			</table>
+		</div>
+		<div style="margin-top:10px;margin-bottom:10px;"><span>上一页</span><span>下一页</span></div>
+
+		<ul>
+			<li><span>id</span><input class="width1" type="input" id="rank" value="1" readonly="true" style="background-color:#EEE"/>
+				<span>名称</span><input class="width1" type="input" id="rank" value="1" readonly="true" style="background-color:#EEE" />
+				<span>状态</span>
+				<select>
+					<option value="all">爆满</option>
+					<option value="128001">推荐</option>
+					<option value="128001">新服</option>
+					<option value="128001">无</option>
+				</select>
+				<span>默认</span>
+				<select>
+					<option value="all">是</option>
+					<option value="128001">否</option>
+				</select>
+				<span>最大人数</span><input class="width2" type="input" id="startdate" >
+			<li><span>描述</span><input class="width2" type="input" id="startdate" ></li>
+			<li><div class="button" style="text-align:right;padding-right:130px;"><button id="search" type="button">修改</button></div>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

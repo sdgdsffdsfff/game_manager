@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="../css/gm.css" />
+<script type="text/javascript" src="../js/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="../css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<script type="text/javascript">
+$(function(){
+      $("#startdate").datepicker();
+})
+</script>
+<title>管理平台</title>
+</head>
+	<div id="gmPanel">
+		<ul class="li_css_2">
+			<li><span>公告内容</span><textarea></textarea><p style="text-indent: 66px;color:red;">100字以内</p></li>
+			<li><span>次数</span><input class="width1" type="input" id="rank" value="1" >
+			<li><span>时间间隔</span><input class="width1" type="input" id="rank" value="1" >分钟</li>
+			<li><span>开始时间</span><input class="width2" type="input" id="startdate" ></li>
+			<li><div class="button" style="text-align:right;padding-right:230px;">
+				<button id="search" type="button">本服添加</button>
+				<button id="search" type="button">修改</button>
+				<button id="search" type="button">删除</button>
+				<button id="search" type="button">全服添加</button>
+				</div>
+			</li>
+		</ul>
+		<h3 style="position: relative;">游戏公告列表<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
+		<div style="max-height:500px;overflow:auto;text-align:center;line-heght:1.5;">
+			<table border="0" cellspacing="1" bgcolor="#99BBE8">
+				<tr>
+					<td bgcolor="#DAE7F6" width="40px">ID</td>
+					<td bgcolor="#DAE7F6" width="300px">内容</td>
+					<td bgcolor="#DAE7F6" width="60px">次数</td>
+					<td bgcolor="#DAE7F6" width="60px">时间间隔</td>
+					<td bgcolor="#DAE7F6" width="60px">状态</td>
+					<td bgcolor="#DAE7F6" width="70px">开始时间</td>
+				</tr>
+				<tr>
+					<td bgcolor="#DAE7F6">50000</td>
+					<td bgcolor="#DAE7F6">
+						<div style="max-height: 100px;overflow: hidden;">倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑倚×天屠龙剑</div></td>
+					<td bgcolor="#DAE7F6">123</td>
+					<td bgcolor="#DAE7F6">5分钟</td>
+					<td bgcolor="#DAE7F6">本服务器公告</td>
+					<td bgcolor="#DAE7F6">2014-09-30 15:15:15</td>
+				</tr>
+			</table>
+		</div>
+		<div style="margin-top:10px;margin-bottom:100px;"><span>上一页</span><span>下一页</span></div>
+	</div>
+</body>
+</html>

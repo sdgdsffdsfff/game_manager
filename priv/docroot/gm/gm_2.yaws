@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="../css/gm.css" />
+<script type="text/javascript" src="../js/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="../css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<script type="text/javascript">
+$(function(){
+      $("#startdate").datepicker();
+      $("#enddate").datepicker();
+})
+</script>
+<title>管理平台</title>
+</head>
+	<div id="gmPanel">
+		<ul class="css_1">
+			<li>
+				<span>游戏角色名</span><input type="input" name="name" value=""><span style="width:12px;"></span>
+				<span>UID</span><input type="input" name="uid" value="">
+				<span class="th">消耗道具</span>
+					<select>
+						<option value="all">所有道具</option>
+						<option value="128001">弟子洗练券[128001]</option>
+					</select>
+			</li>
+			<li>
+				<span>开始时间</span><input type="input" class="width2" id="startdate" name="startdate" /><span style="width:12px;"></span>
+				<span>结束时间</span><input type="input" class="width2" id="enddate" name="enddate" />
+			</li>
+			<li><div class="button" style="text-align:right;padding-right:10px;"><button id="search" type="button">查询</button></div></li>
+		</ul>
+		<h3 style="position: relative;">道具消耗列表<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
+		<div style="max-height:500px;overflow:auto;text-align:center;line-heght:1.5;">
+			<table border="0" cellspacing="1" bgcolor="#99BBE8">
+				<tr>
+					<td bgcolor="#DAE7F6" width="40px">ID</td>
+					<td bgcolor="#DAE7F6" width="90px">角色名称</td>
+					<td bgcolor="#DAE7F6" width="212px">内容</td>
+					<td bgcolor="#DAE7F6" width="120px">道具名称</td>
+					<td bgcolor="#DAE7F6" width="56px">道具数量</td>
+					<td bgcolor="#DAE7F6" width="56px">道具等级</td>
+					<td bgcolor="#DAE7F6" width="60px">操作时间</td>
+				</tr>
+				<tr>
+					<td bgcolor="#DAE7F6">50000</td>
+					<td bgcolor="#DAE7F6">倚×天屠龙剑</td>
+					<td bgcolor="#DAE7F6">123</td>
+					<td bgcolor="#DAE7F6">弟子习武卷</td>
+					<td bgcolor="#DAE7F6">999</td>
+					<td bgcolor="#DAE7F6">99</td>
+					<td bgcolor="#DAE7F6">2014-09-30 15:15:15</td>
+				</tr>
+			</table>
+		</div>
+		<div style="margin-top:10px;margin-bottom:100px;"><span>上一页</span><span>下一页</span></div>
+	</div>
+</body>
+</html>

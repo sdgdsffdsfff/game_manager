@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="../css/gm.css" />
+</script>
+<title>管理平台</title>
+</head>
+	<div id="gmPanel">
+		<ul>
+			<li>
+				<span>游戏角色名</span><input type="input" name="name" value=""><span style="width:12px;"></span>
+				<span>UID</span><input type="input" name="uid" value="">
+			</li>
+			<li><div class="button" style="text-align:right;padding-right:200px;"><button id="search" type="button">查询</button></div></li>
+		</ul>
+		<h3>角色信息</h3>
+		<ul class="ul_css_2">
+			<li>
+				<p><span>排名</span><input class="width1" type="input" id="rank" value="1" readonly="true" style="background-color:#EEE"></p>
+				<p><span>等级</span><input class="width1" type="input" id="lv" value="99" readonly="true" style="background-color:#EEE"></p>
+				<p><span>充值</span><input class="width1" type="input" id="rmb" value="100" readonly="true" style="background-color:#EEE"></p>
+				<p><span>实力</span><input class="width1" type="input" id="strength" value="1000000" readonly="true" style="background-color:#EEE"></p>
+				<p><span>门派</span><input class="width1" type="input" id="gangid" value="1000000" readonly="true" style="background-color:#EEE"></p>
+				<p><input class="button1" type="button" id="search1" value="查看装备"/></p>
+				<p><input class="button1" type="button" id="search2" value="查看技能"/></p>
+				<p><input class="button1" type="button" id="search3" value="查看包裹"/></p>
+				<p><input class="button1" type="button" id="search4" value="查看任务"/></p>
+			</li>
+			<li class="li_css_2">
+				<p><span>队伍排名</span><input class="width2" type="input" id="teamrank" value="1" readonly="true" style="background-color:#EEE"></p>
+				<p><span>最大人数</span><input class="width2" type="input" id="maxnum" value="99" readonly="true" style="background-color:#EEE"></p>
+				<p><span>队伍实力</span><input class="width2" type="input" id="teamstrength" value="100" readonly="true" style="background-color:#EEE"></p>
+				<p><span>队伍人数</span><input class="width2" type="input" id="teamnum" value="1000000" readonly="true" style="background-color:#EEE"></p>
+				<p><span>队员1人  </span><input class="width2" type="input" id="team1" value="倚×天屠龙剑" readonly="true" style="background-color:#EEE"></p>
+				<p><span>队员2人   </span><input class="width2" type="input" id="team2" value="99" readonly="true" style="background-color:#EEE"></p>
+				<p><span>队员3人  </span><input class="width2" type="input" id="team3" value="100" readonly="true" style="background-color:#EEE"></p>
+				<p><span>队员4人  </span><input class="width2" type="input" id="team4" value="10000" readonly="true" style="background-color:#EEE"></p>
+				<p><span>封号状态</span><input class="width3" type="input" id="re1" value="封号" readonly="true" style="background-color:#EEE">
+															 <input class="button2" type="button" id="re1_1" value="解封" /></p>
+				<p><span>禁言状态</span><input class="width3" type="input" id="re2" value="禁言" readonly="true" style="background-color:#EEE">
+														     <input class="button2" type="button" id="re2_1" value="解禁"/></p>
+			</li>
+			<li class="li_css_3">
+				<p><span>主穴  </span><input class="width3" type="input" id="acu1" value="1" readonly="true" style="background-color:#EEE"></p>
+				<p><span>腿穴  </span><input class="width3" type="input" id="acu2" value="99" readonly="true" style="background-color:#EEE"></p>
+				<p><span>奇门穴</span><input class="width3" type="input" id="acu3" value="99" readonly="true" style="background-color:#EEE"></p>
+				<p><span>境界  </span><input class="width3" type="input" id="acu4" value="99" readonly="true" style="background-color:#EEE"></p>
+				<p><span>大殿  </span><input class="width3" type="input" id="building1" value="1" readonly="true" style="background-color:#EEE"></p>
+				<p><span>闭关  </span><input class="width3" type="input" id="building2" value="99" readonly="true" style="background-color:#EEE"></p>
+				<p><span>药园  </span><input class="width3" type="input" id="building3" value="99" readonly="true" style="background-color:#EEE"></p>
+				<p><span>药房  </span><input class="width3" type="input" id="building4" value="99" readonly="true" style="background-color:#EEE"></p>
+				<p><span>酒楼  </span><input class="width3" type="input" id="building5" value="99" readonly="true" style="background-color:#EEE"></p>
+				<p><span>铁匠铺</span><input class="width3" type="input" id="building6" value="99" readonly="true" style="background-color:#EEE"></p>
+			</li>
+			<li class="li_css_2">
+				<p><span>创建日期</span><input class="width4" type="input" id="createtime" value="2014-08-09 15:15:15" readonly="true" style="background-color:#EEE"></p>
+				<p><span>最后登录</span><input class="width4" type="input" id="logintime" value="10000" readonly="true" style="background-color:#EEE"></p>
+				<p><span>最后登出</span><input class="width4" type="input" id="loginouttime" value="10000" readonly="true" style="background-color:#EEE"></p>
+				<p><span>扫荡点</span><input class="width4" type="input" id="att1" value="1"></p>
+				<p><span>VIP   </span><input class="width4" type="input" id="att2" value="99"></p>
+				<p><span>银两  </span><input class="width4" type="input" id="att3" value="99"></p>
+				<p><span>元宝  </span><input class="width4" type="input" id="att4" value="99"></p>
+				<p><span>学点  </span><input class="width4" type="input" id="att5" value="99"></p>
+				<p><span>体力  </span><input class="width4" type="input" id="att6" value="99"></p>
+				<p><span>经验  </span><input class="width4" type="input" id="att7" value="99"></p>
+				<p><span>修为  </span><input class="width4" type="input" id="att8" value="99"></p>
+				<p><span>声望  </span><input class="width4" type="input" id="att9" value="99"></p>
+				<p><span>药材  </span><input class="width4" type="input" id="att10" value="99"></p>
+				<div class="button" style="text-align:right;padding-right:150px;"><button id="save_attr" type="button">修改以上属性</button></div>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

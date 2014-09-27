@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<title>管理平台</title>
+
+<erl>
+out(A) ->
+	{ssi, "../inc/head_login.inc", "%%", [{"user", "test"}]}.
+</erl>
+
+<div id="content" class="wtcenter">
+	<div class="container_hd"><h2>GM工具</h2></div>
+	<erl>
+	out(A) ->
+		{ssi, "../inc/side_gm.inc", "%%", [{"user", "test"}]}.
+	</erl>
+	<div id="mainPanel">
+		<iframe src="data_1.yaws" scrolling="no" onload="reinitIframe('gm_iframe');" id="gm_iframe" frameborder="0"></iframe>
+	</div>
+<div class="clear"></div>
+</div>
+
+<erl>
+out(A) ->
+	{ssi, "../inc/foot.inc", "", ""}.
+</erl>
+
+</body>
+</html>

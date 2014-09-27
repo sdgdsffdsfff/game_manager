@@ -1,0 +1,73 @@
+﻿<erl>
+	out(A) ->
+	   case gm_ctrl_cookie:login(A) of
+	      {ok, UserData} -> [{bindings, [{"UserData", UserData}]}];
+	      {error, _} -> {redirect, "/userLogin/userLogin.yaws"}
+	   end.
+</erl>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="css/index.css" />
+<title>管理平台</title>
+<erl>
+out(A) ->
+	{ssi, "inc/head_login.inc", "%%", [{"user", "test"}]}.
+</erl>
+
+<!--动态化-->
+	<div id="content" class="wtcenter">
+		<div id="mainPanel">
+			<h2>欢迎您，超级管理员</h2>
+			<div class="todoList"><p style="font-size:14px;">每日问句数统计</p></div>
+			<div class="svg">
+				<canvas id="canvas" height="300" width="624" style="width: 624px; height: 300px; position: relative; left: -12px;"></canvas>
+				<script src="js/Chart.min.js"></script>
+				<script>
+				var lineChartData = {
+					labels : ["8-28","8-29","8-30","8-31","9-1","9-2","9-3"],
+					datasets : [
+						{
+							fillColor : "rgba(151,187,205,0.5)",
+							strokeColor : "rgba(151,187,205,1)",
+							pointColor : "rgba(151,187,205,1)",
+							pointStrokeColor : "#fff",
+							data : [-1,-1,-1,-1,-1,-1,-1]
+						}
+					]
+					
+				}
+				var myLine = new Chart(document.getElementById("canvas").getContext("2d")).Line(lineChartData);
+				</script>
+			</div>
+		</div>
+		<div id="extendPanel">
+			<div class="ex_top"></div>
+			<div class="ex_cen">
+				<div class="cen">
+					<h3>系统公告</h3>
+					<div class="item">
+						<div class="item_top"></div>
+						<p>使用时有任何疑问或建议，联系邮箱：<a href="mailto:yujian1018@gmail.com" target="_blank">yujian1018@gmail.com</a></p>
+					</div>
+					<div class="item">
+						<div class="item_top"></div>
+						<p><a href="log.yaws" style="font-size:14px;">gm管理平台上线</a></p>
+					</div>
+				</div>
+			</div>
+			<div class="ex_bot"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+<erl>
+out(A) ->
+	{ssi, "inc/foot.inc", "", ""}.
+</erl>
+
+</body>
+</html>

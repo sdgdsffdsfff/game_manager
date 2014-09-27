@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="../css/gm.css" />
+<script type="text/javascript" src="../js/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="../css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<script type="text/javascript">
+$(function(){
+      $("#startdate").datepicker();
+      $("#enddate").datepicker();
+})
+</script>
+<title>管理平台</title>
+</head>
+	<div id="gmPanel">
+		<h3 style="position: relative;">推送列表<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
+		<div style="max-height:500px;overflow:auto;text-align:center;line-heght:1.5;">
+			<table border="0" cellspacing="1" bgcolor="#99BBE8">
+				<tr>
+					<td bgcolor="#DAE7F6" width="40px">ID</td>
+					<td bgcolor="#DAE7F6" width="60px">标题</td>
+					<td bgcolor="#DAE7F6" width="240px">内容</td>
+					<td bgcolor="#DAE7F6" width="40px">类型</td>
+					<td bgcolor="#DAE7F6" width="40px">状态</td>
+					<td bgcolor="#DAE7F6" width="40px">url</td>
+					<td bgcolor="#DAE7F6" width="80px">时间段</td>
+					<td bgcolor="#DAE7F6" width="60px">具体时间</td>
+					
+				</tr>
+				<tr>
+					<td bgcolor="#DAE7F6">1</td>
+					<td bgcolor="#DAE7F6">世界boss开启啦，请大家快来虐boss</td>
+					<td bgcolor="#DAE7F6">世界boss开启啦，请大家快来虐boss世界boss开启啦，请大家快来虐boss世界boss开启啦，请大家快来虐boss世界boss开启啦，请大家快来虐boss世界boss开启啦，请大家快来虐boss</td>		<td bgcolor="#DAE7F6">世界boss</td>
+					<td bgcolor="#DAE7F6">未运行</td>
+					<td bgcolor="#DAE7F6">http://www.baidu.com</td>
+					<td bgcolor="#DAE7F6">2014-09-30 15:15:15 - 2014-09-30 15:15:15</td>
+					<td bgcolor="#DAE7F6">8:00</td>
+					
+				</tr>
+			</table>
+		</div>
+		<div style="margin-top:10px;margin-bottom:10px;"><span>上一页</span><span>下一页</span></div>
+
+		<ul>
+			<li><span>标题</span><input class="width1" type="input" id="rank" value="1" /></li>
+			<li><span>内容</span><textarea></textarea></li>
+			<li><span>类型</span>
+				<select>
+					<option value="all">web</option>
+					<option value="128001">打开应用</option>
+					<option value="128001">世界boss</option>
+					<option value="128001">学霸</option>
+					<option value="128001">盟会战</option>
+				</select>
+			</li>
+			<li><span>URL</span><input class="width1" type="input" id="rank" value="1"/></li>
+			<li><span>开始时间</span><input type="input" class="width2" id="startdate" name="startdate" />
+				<span>结束时间</span><input type="input" class="width2" id="enddate" name="enddate" />
+				<span>具体时间</span><input type="input" class="width3" id="enddate" name="enddate" />时<input type="input" class="width3" id="enddate" name="enddate" />分<input type="input" class="width3" id="enddate" name="enddate" />秒</li>
+			<li><button id="search" type="button">添加数据</button><button id="search" type="button">删除数据</button></li>
+		</ul>
+	</div>
+</body>
+</html>

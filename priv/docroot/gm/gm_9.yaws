@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="../css/gm.css" />
+<script type="text/javascript" src="../js/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="../css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<script type="text/javascript">
+$(function(){
+      $("#startdate").datepicker();
+      $("#enddate").datepicker();
+})
+</script>
+<title>管理平台</title>
+</head>
+	<div id="gmPanel">
+		<ul>
+			<li>
+				<span>开始时间</span><input type="input" class="width2" id="startdate" name="startdate" /><span style="width:12px;"></span>
+				<span>结束时间</span><input type="input" class="width2" id="enddate" name="enddate" />
+			</li>
+			<li><div class="button" style="text-align:right;padding-right:10px;"><button id="search" type="button">查询</button></div></li>
+		</ul>
+		<h3 style="position: relative;">bug反馈列表<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
+		<div style="max-height:500px;overflow:auto;text-align:center;line-heght:1.5;">
+			<table border="0" cellspacing="1" bgcolor="#99BBE8">
+				<tr>
+					<td bgcolor="#DAE7F6" width="40px">ID</td>
+					<td bgcolor="#DAE7F6" width="80px">时间</td>
+					<td bgcolor="#DAE7F6" width="60px">服务器</td>
+					<td bgcolor="#DAE7F6" width="60px">Uid</td>
+					<td bgcolor="#DAE7F6" width="60px">角色名称</td>
+					<td bgcolor="#DAE7F6" width="60px">bug状态</td>
+					<td bgcolor="#DAE7F6" width="240px">bug描述</td>
+					
+				</tr>
+				<tr>
+					<td bgcolor="#DAE7F6">1</td>
+					<td bgcolor="#DAE7F6">2014-09-30 15:15:15</td>
+					<td bgcolor="#DAE7F6">荣耀至尊</td>
+					<td bgcolor="#DAE7F6">123</td>
+					<td bgcolor="#DAE7F6">荣耀至尊</td>
+					<td bgcolor="#DAE7F6">未处理</td>
+					<td bgcolor="#DAE7F6">请问下首冲的邀月公主在哪，为什么没有</td>
+					
+				</tr>
+			</table>
+		</div>
+		<div style="margin-top:10px;margin-bottom:10px;"><span>上一页</span><span>下一页</span></div>
+
+		<ul>
+			<li><span>BugID</span><input class="width1" type="input" id="rank" value="1" readonly="true" style="background-color:#EEE"/>
+			<li><span>描述</span><textarea></textarea></li>
+			<li><button id="search" type="button">更新为已处理</button> <button id="search" type="button">更新为未处理</button></li>
+		</ul>
+	</div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<erl>
+out(A) ->
+	{ssi, "../inc/head_charset.inc", "", ""}.
+</erl>
+<link rel="stylesheet" type="text/css" href="../css/gm.css" />
+<title>管理平台</title>
+<script type="text/javascript">
+$(function(){
+	$("#search").click(function(){
+		var $userName = $("#name").val();
+		var $uid = $("#uid").val();
+		if( $userName == "" && $uid == "")
+		{
+			$("#message").text("请至少输入一项！");
+			return false;
+		}
+		$("#message").text("");
+		var $url = "../action.yaws?action=gm_1_1&username="+$userName+"&uid="+$uid;
+		ajax( $url, "gm_1" )
+      });
+})
+function callback( data, callback ){
+	if(data.uids == "0"){
+		$("#message").text("没有查询到数据");
+	}
+	else{
+		var $tabli="";
+		var $html="";
+		 $.each(data.res, function(i, $item){
+		 	$tabli += "<li><p>"+$item.name+"</p></li>";
+		 	$html +="<ul class='ul_css_gm1_2'><li>"+
+		 			"<p><span>名称</span><input  type='input' class='name_1' value='"+$item.name+"' readonly='true' style='background-color:#EEE'></p>"+
+				 	"<p><span>UID</span><input  type='input' class='uid_1' value='"+$item.uid+"' readonly='true' style='background-color:#EEE'></p>"+
+				 	"<p><span>排名</span><input  type='input' class='rank' value='"+$item.rank+"' readonly='true' style='background-color:#EEE'></p>"+
+				 	"<p><span>等级</span><input  type='input' class='lv' value='"+$item.lv+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>充值</span><input  type='input' class='rmb' value='"+$item.rechage+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>实力</span><input  type='input' class='strength' value='"+$item.strength+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>门派</span><input  type='input' class='gangid' value='"+$item.gangId+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>阵营</span><input  type='input' class='camp' value='"+$item.camp+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><input class='button1' type='button' class='search1' value='查看装备'/></p>"+
+					"<p><input class='button1' type='button' class='search2' value='查看技能'/></p>"+
+					"<p><input class='button1' type='button' class='search3' value='查看包裹'/></p>"+
+					"<p><input class='button1' type='button' class='search4' value='查看任务'/></p>"+
+				"</li>"+
+				"<li class='li_css_2'>"+
+					"<p><span>队伍排名</span><input  type='input' class='teamrank' value='"+$item.teamRank+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>最大人数</span><input  type='input' class='maxnum' value='"+$item.teamNum+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>队伍实力</span><input  type='input' class='teamstrength' value='"+$item.teamStrength+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>队伍人数</span><input  type='input' class='teamnum' value='"+$item.teamNum+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>队员1人  </span><input  type='input' class='team1' value='"+$item.team1+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>队员2人   </span><input  type='input' class='team2' value='"+$item.team2+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>队员3人  </span><input  type='input' class='team3' value='"+$item.team3+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>队员4人  </span><input  type='input' class='team4' value='"+$item.team4+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>封号状态</span><input class='width3' type='input' class='re1' value='"+$item.closure+"' readonly='true' style='background-color:#EEE'><input class='button2' type='button' class='re1_1' value='解封' /></p>"+
+					"<p><span>禁言状态</span><input class='width3' type='input' class='re2' value='"+$item.gagTime+"' readonly='true' style='background-color:#EEE'><input class='button2' type='button' class='re2_1' value='解禁'/></p>"+
+				"</li>"+
+				"<li class='li_css_3'>"+
+					"<p><span>主穴  </span><input type='input' class='acu1' value='"+$item.acu1+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>腿穴  </span><input type='input' class='acu2' value='"+$item.acu2+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>奇门穴</span><input type='input' class='acu3' value='"+$item.acu3+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>境界  </span><input type='input' class='acu4' value='"+$item.acu4+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>大殿  </span><input type='input' class='building1' value='"+$item.building1+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>闭关  </span><input type='input' class='building2' value='"+$item.building2+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>药园  </span><input type='input' class='building3' value='"+$item.building3+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>药房  </span><input type='input' class='building4' value='"+$item.building4+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>酒楼  </span><input type='input' class='building5' value='"+$item.building5+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>铁匠铺</span><input type='input' class='building6' value='"+$item.building6+"' readonly='true' style='background-color:#EEE'></p>"+
+				"</li>"+
+				"<li class='li_css_2'>"+
+					"<p><span>创建日期</span><input class='width4' type='input' class='createtime' value='"+$item.createTime+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>最后登录</span><input class='width4' type='input' class='logintime' value='"+$item.downlineTime+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>最后登出</span><input class='width4' type='input' class='loginouttime' value='"+$item.onlineTime+"' readonly='true' style='background-color:#EEE'></p>"+
+					"<p><span>扫荡点</span><input class='width4' type='input' class='att1' value='"+$item.sweepPoint+"'></p>"+
+					"<p><span>VIP   </span><input class='width4' type='input' class='att2' value='"+$item.viplv+"'></p>"+
+					"<p><span>银两  </span><input class='width4' type='input' class='att3' value='"+$item.gold+"'></p>"+
+					"<p><span>元宝  </span><input class='width4' type='input' class='att4' value='"+$item.rmb+"'></p>"+
+					"<p><span>学点  </span><input class='width4' type='input' class='att5' value='"+$item.learn+"'></p>"+
+					"<p><span>体力  </span><input class='width4' type='input' class='att6' value='"+$item.vit+"'></p>"+
+					"<p><span>经验  </span><input class='width4' type='input' class='att7' value='"+$item.exp+"'></p>"+
+					"<p><span>修为  </span><input class='width4' type='input' class='att8' value='"+$item.practice+"'></p>"+
+					"<p><span>药材  </span><input class='width4' type='input' class='att10' value='"+$item.drug+"'></p>"+
+					"<div class='button' style='text-align:right;padding-right:45px;'><button id='save_attr' type='button'>修改以上属性</button></div>"+
+				"</li>"+
+			"</ul>";
+		 });
+		 $("#gmPanel .title_tab").html( "" );
+		 $("#gmPanel .title_tab").html( $tabli+"<br class=\"clear\"/>" );
+		 $("#gmPanel #role_info").html( "" );
+		 $("#gmPanel #role_info").html( $html );
+	}
+}
+</script>
+</head>
+	<div id="gmPanel">
+		<ul>
+			<li>
+				<span>角色名</span><input type="input" name="name" value="" id="name"><span></span>
+				<span>UID</span><input type="input" name="uid" id="uid" value="">
+			</li>
+			<li><div class="button" style="text-align:right;padding-right:200px;"><span style="color:red;" id="message"></span><button id="search" type="button">查询</button></div></li>
+		</ul>
+		<ul class="title_tab">
+		    <li class="selected" ><p>角色信息</p></li>
+		    <br class="clear"/>
+		</ul>
+		<div id="role_info">
+				<ul class="ul_css_gm1_2">
+			<li>
+				<p><span>名称</span><input type="input" class="name_1" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>UID</span><input type="input" class="uid_1" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>排名</span><input type="input" class="rank" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>等级</span><input type="input" class="lv" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>充值</span><input type="input" class="rmb" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>实力</span><input type="input" class="strength" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>门派</span><input type="input" class="gangid" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>阵营</span><input type="input" class="camp" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><input class="button1" type="button" value="查看装备"></p>
+				<p><input class="button1" type="button" value="查看技能"></p>
+				<p><input class="button1" type="button" value="查看包裹"></p>
+				<p><input class="button1" type="button" value="查看任务"></p>
+			</li>
+			<li class="li_css_2">
+				<p><span>队伍排名</span><input type="input" class="teamrank" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>最大人数</span><input type="input" class="maxnum" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>队伍实力</span><input type="input" class="teamstrength" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>队伍人数</span><input type="input" class="teamnum" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>队员1人  </span><input type="input" class="team1" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>队员2人   </span><input type="input" class="team2" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>队员3人  </span><input type="input" class="team3" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>队员4人  </span><input type="input" class="team4" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>封号状态</span><input class="width3" type="input" value="封号" readonly="true" style="background-color:#EEE">
+															 <input class="button2" type="button" value="解封"></p>
+				<p><span>禁言状态</span><input class="width3" type="input" value="禁言" readonly="true" style="background-color:#EEE">
+														     <input class="button2" type="button" value="解禁"></p>
+			</li>
+			<li class="li_css_3">
+				<p><span>主穴  </span><input type="input" class="acu1" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>腿穴  </span><input type="input" class="acu2" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>奇门穴</span><input type="input" class="acu3" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>境界  </span><input type="input" class="acu4" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>大殿  </span><input type="input" class="building1" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>闭关  </span><input type="input" class="building2" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>药园  </span><input type="input" class="building3" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>药房  </span><input type="input" class="building4" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>酒楼  </span><input type="input" class="building5" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>铁匠铺</span><input type="input" class="building6" value="" readonly="true" style="background-color:#EEE"></p>
+			</li>
+			<li class="li_css_2">
+				<p><span>创建日期</span><input class="width4" type="input" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>最后登录</span><input class="width4" type="input" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>最后登出</span><input class="width4" type="input" value="" readonly="true" style="background-color:#EEE"></p>
+				<p><span>扫荡点</span><input class="width4" type="input" value=""></p>
+				<p><span>VIP   </span><input class="width4" type="input" value=""></p>
+				<p><span>银两  </span><input class="width4" type="input" value=""></p>
+				<p><span>元宝  </span><input class="width4" type="input" value=""></p>
+				<p><span>学点  </span><input class="width4" type="input" value=""></p>
+				<p><span>体力  </span><input class="width4" type="input" value=""></p>
+				<p><span>经验  </span><input class="width4" type="input" value=""></p>
+				<p><span>修为  </span><input class="width4" type="input" value=""></p>
+				<p><span>药材  </span><input class="width4" type="input" value=""></p>
+				<div class="button" style="text-align:right;padding-right:45px;"><button id="save_attr" type="button">修改以上属性</button></div>
+			</li>
+		</ul>
+		</div>
+	</div>
+
+</body>
+</html>

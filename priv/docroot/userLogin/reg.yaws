@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<title>账户注册</title>
+<link rel="stylesheet" type="text/css" href="css/reg.css">
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#reg").validate({
+		onkeyup:false,
+		
+		rules:{
+		   userlogin:{required:true,email:true,minlength:6,maxlength:30,remote:"../action.yaws"},
+		   password:{required:true,minlength:6},
+		   passwordtoo:{equalTo:"#password",required:true},
+		   companyName:{required:true},
+		   val:{required:true,remote:"../action.yaws"},
+		   agree:{required:true}
+		   },			 
+		messages:{
+		   userlogin:{required:'用户名不能为空！', email:'请输入正确的格式', minlength:'用户名长度必须大于6！',maxlength:'用户名长度必须小于30！',remote:"你输入的用户已经存在！"},
+		   password:{required:'密码不能为空！',minlength:'密码长度不能低于6个！'},
+		   passwordtoo:{equalTo:'两次输入的密码不正确，请重新输入！',required:'密码不能为空！'},
+		   companyName:{required:'不能为空！'},
+		   val:{required:'请填写邀请码',remote:"请输入正确的激活码！"},
+		   agree:{required:'请仔细阅读用户协议'}
+		   },
+		   errorElement:"em",
+		   success:function(label){
+			label.text("").addClass("success")}		 
+		});
+	$("#saveSetting").click( function(){
+		if($vali.form() == true)
+		{
+			updatepwd();
+			return false;
+		}
+		else{return false;}
+	});
+})
+</script>
+</head>
+<body>
+	<div id="body">
+		<!--<div class="logo">
+			<img alt="logo" title="logo" height="60" border="0'" width="150" src="images/logo.bmp" />
+		</div>-->
+		<br/>
+		<h2>创建账户</h2>
+		
+		<div style="border:2px solid #CBDCED;padding:0px 0px 20px 6px;width:605px;margin-top:16px;">
+			<br/>
+			<h3 style=" color:#3366CC;">创建账户的必须信息</h3>
+			<br/>
+			<form action="../action.yaws?action=reg&arg=reg" method="post" id="reg">			
+				<table width="100%">
+					<tr><th valign="top" >电子邮箱：</th>
+					    <td valign="top"><div><input type="text" name="userlogin" size="30" value=""/></div>
+						<span class="info">请输入您的电子邮箱</span>
+					     </td>
+					</tr>
+					<tr><th valign="top" >设定密码：</th><td>
+							<div><input type="password" name="password" size="30" value="" id="password" /></div>
+							<span class="info">长度必须最少包含 8 个字符。</span>
+					</td></tr>
+					<tr><th valign="top">再次输入密码：</th>
+						<td><div><input type="password" name="passwordtoo" size="30" value=""/></div>
+					<tr><th valign="top">公司名称：</th>
+					    <td><div><input type="text" name="companyName"  value="" size="15"/></div>
+						<span class="info">目前不提供修改服务，请仔细填写</span></td>
+					</tr>
+					<tr><th valign="top">邀请码：</th>
+					    <td><div><input type="text" name="val"  value="" size="15"/></div>
+					    <span class="info">输入您获得的邀请码</span></td>
+					</tr>
+					<tr><td></td><td>
+						<p><input type="checkbox" checked="checked" name="agree">
+						   <label>我已阅读并接受</label>
+						   <a target="_blank" href="userProtocal.txt">《好问角用户协议》</a>
+						</p>
+					</td></tr>
+					<tr><td></td><td><input type="submit" value="我接受：创建我的账户" id="submit" /></td></tr>
+					<tr><td></td>
+					<td>
+						<erl>
+						out(A) ->
+							Text = case yaws_api:queryvar(A, "msg") of
+								{ok, Val} ->Val;
+								_ ->[]
+							end,
+							{ehtml,
+								[{p,[{style,"color:red"}],Text}]}.
+						</erl>
+					</td></tr>
+				</table>
+			</form>
+		</div>
+		<div class="login">
+			<font size="-1">如果您已拥有帐户，则可<a href="userLogin.yaws">在此登录</a>。</font>
+		</div>
+	</div>
+</body>
+</html>
