@@ -6,7 +6,7 @@
 -include( "../include/gm.hrl" ).
 -export([handle/1]).
 
-handle( {"0", ServerDB, PaltformId, StimeStr, EtimeStr} ) ->
+handle( {"0", ServerDB, PaltformId, [{"stime", StimeStr}, {"etime", EtimeStr}]} ) ->
 	SqlData = pay_data( ServerDB, PaltformId, gm_fun:all_to_integer(StimeStr), gm_fun:all_to_integer(EtimeStr) ),
 	{ok, gm_fun:json( ["dayTime", "all", "allnum", "allrole", "reg", "regnum", "regrole"], SqlData )};
 

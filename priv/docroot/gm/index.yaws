@@ -12,7 +12,7 @@
 out(A) ->
 	{ssi, "../inc/head_charset.inc", "", ""}.
 </erl>
-<title>管理平台</title>
+<title>GM工具</title>
 </head>
 <body>
 <erl>
@@ -26,7 +26,7 @@ out(A) ->
 </erl>
 
 <div id="content" class="wtcenter">
-	<div class="container_hd"><h2>GM工具</h2></div>
+	<div class="container_hd"><h2>GM工具<font color="red">&nbsp;&nbsp;&nbsp;GM工具由AIR开发更快速，体验更好（因为数据缓存）</font></h2></div>
 	<erl>
 	out(A) ->
 		{ssi, "../inc/side_gm.inc", "%%", [{"user", "test"}]}.

@@ -12,7 +12,7 @@
 out(A) ->
 	{ssi, "../inc/head_charset.inc", "", ""}.
 </erl>
-<title>管理平台</title>
+<title>数据查询</title>
 </head>
 <body>
 <erl>

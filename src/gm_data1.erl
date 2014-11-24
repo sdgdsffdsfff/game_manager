@@ -6,14 +6,14 @@
 -include( "../include/gm.hrl" ).
 -export([handle/1]).
 
-handle( {"0", ServerDB, PaltformId, StimeStr, EtimeStr} ) ->
+handle( {"0", ServerDB, PaltformId, [{"stime", StimeStr}, {"etime", EtimeStr}]} ) ->
 	SqlData = reg_data( ServerDB, PaltformId, gm_fun:all_to_integer(StimeStr), gm_fun:all_to_integer(EtimeStr) ),
 	{ok, gm_fun:json( ["dayTime", "add", "online"], SqlData )};
 
-handle( {"1", ServerDB, PaltformId, StimeStr, EtimeStr} ) ->
+handle( {"1", ServerDB, PaltformId, [{"stime", StimeStr}, {"etime", EtimeStr}]} ) ->
 	SqlData = retention_select( ServerDB, PaltformId, gm_fun:all_to_integer(StimeStr), gm_fun:all_to_integer(EtimeStr) ),
-	{ok, gm_fun:json( ["dayTime", "reg", "renum_1", "re_1", "renum_2", "re_2","renum_3", "re_3","renum_4", "re_4", 
-					   		   "renum_5", "re_5","renum_6", "re_6","renum_7", "re_7","renum_8", "re_8","renum_9", "re_9"], SqlData )};
+	{ok, gm_fun:json( ["dayTime", "reg", "renum_1", "renum_2", "renum_3", "renum_4", 
+					   		   "renum_5", "renum_6", "renum_7", "renum_8", "renum_9"], SqlData )};
 	
 handle( _Other ) ->
 	?trace( ["no this handle", _Other] ).
@@ -76,8 +76,7 @@ retention_select( ServerDB, PaltformId, Stime, Etime ) ->
 						end,
 					gm_pool:executeDynamic({DayStime, DayEtime}, {Sql2, count, ServerDB})
 			 	 end,
-			  RetentionNum = lists:map( Fun2, RetentionTime ),
-			  [DayStime, Reg|lists:append([case {I, Reg} of {0,_} -> [0,0]; {_,0} -> [0,0]; {I, Reg} -> [I, I/Reg] end || I<- RetentionNum])]
+			  [DayStime, Reg|lists:map( Fun2, RetentionTime )]
 			  
 		end,
 	lists:map( Fun, TimeList ).

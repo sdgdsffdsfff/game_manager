@@ -12,7 +12,10 @@ out(A) ->
 <script type="text/javascript">
 var $serverId;
 var $platformId;
+var $thisPage;
 $(function(){
+	$thisPage = $("#thisPage").val();
+
 	$.datepicker.setDefaults({
         dateFormat: 'yy-mm-dd',
         firstDay:'0',
@@ -53,28 +56,20 @@ function option_1(){
 		var earray = $etime.split( "-" );
 		var $edate = new Date(earray[0],earray[1]-1,earray[2]);
 
-		var $url = "/action.yaws?action=data_2&select_option="+$select_option+
+		var $url = "/action.yaws?action="+$thisPage+"&select_option="+$select_option+
 								 "&serverId="+$serverId+"&platformId="+$platformId+"&stime="+$sdate.getTime()/1000+"&etime="+$edate.getTime()/1000;
-		ajax( $url, "data_2.yaws 0" );
+		ajax( $url, "0" );
 	}			
 }
 
 function callback( data, callback ){
 	if(data.state == "200"){
-		if( callback == "data_2.yaws 0" ){
+		if( callback == "0" ){
 			$("#pay_table tbody").html( "" );
 			$.each(data.msg, function(i, item){
 				var d=new Date(item.dayTime*1000);
-				var arpu;
-				if(item.all == 0){
-					arpu = 0;
-				}else if( item.allrole == 0 ){
-					arpu = 0;
-				}else{
-					arpu = Number(item.all/item.allrole).toFixed(2);
-				}
 
-				var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.all+"</td><td>"+item.allnum+"</td><td>"+item.allrole+"</td><td>"+arpu
+				var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.all+"</td><td>"+item.allnum+"</td><td>"+item.allrole+"</td><td>"+eval_divide(item.all, item.allrole)
 							+"</td><td>"+item.reg+"</td><td>"+item.regnum+"</td><td>"+item.regrole+"</td></tr>";
 				$("#pay_table tbody").append( $tr );
 			
@@ -131,6 +126,7 @@ function callback( data, callback ){
 		</div>
 	</div>
 	<input type="hidden" id = "select_option" value="0" />
+	<input type="hidden" id = "thisPage" value="data_2" />
 <erl>
 out(A) ->
 	{ssi, "../inc/side_bg.inc", "", ""}.

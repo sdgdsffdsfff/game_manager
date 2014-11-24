@@ -20,8 +20,11 @@ var item;
 var mate;
 var skill;
 var itemName;
+var $thisPage;
 $(function(){
-	 $.ajax({
+	$thisPage = $("#thisPage").val();
+
+	$.ajax({
         url:"/lib/key_value.json",
         dataType: "json",
         error:function(){
@@ -75,8 +78,8 @@ function option_1(){
 	}else{
 		$("#currency_msg").hide();
 		$select_option = $("#select_option").val();
-		var $url = "/action.yaws?action=data_4&select_option="+$select_option+"&serverId="+$serverId+"&platformId="+$platformId;
-		ajax( $url, "data_4.yaws 0" );
+		var $url = "/action.yaws?action="+$thisPage+"&select_option="+$select_option+"&serverId="+$serverId+"&platformId="+$platformId;
+		ajax( $url, "0" );
 	}	
 }
 
@@ -104,10 +107,10 @@ function option_2(){
 			var earray = $etime.split( "-" );
 			var $edate = new Date(earray[0],earray[1]-1,earray[2]);
 
-			var $url = "/action.yaws?action=data_4&select_option="+$select_option+
+			var $url = "/action.yaws?action="+$thisPage+"&select_option="+$select_option+
 									 "&serverId="+$serverId+"&platformId="+$platformId+"&option="+$economy_option+
 									 "&stime="+$sdate.getTime()/1000+"&etime="+$edate.getTime()/1000;
-			ajax( $url, "data_4.yaws 1" );
+			ajax( $url, "1" );
 		}		
 	}	
 }
@@ -120,13 +123,13 @@ function option_3(){
 		$("#prop_msg").hide();
 		$select_option = $("#select_option").val();
 		var $prop_option = $("#prop_option").val();
-		var $url = "/action.yaws?action=data_4&select_option="+$select_option+"&serverId="+$serverId+"&platformId="+$platformId+"&prop_option="+$prop_option;
-		ajax( $url, "data_4.yaws 2" );
+		var $url = "/action.yaws?action="+$thisPage+"&select_option="+$select_option+"&serverId="+$serverId+"&platformId="+$platformId+"&prop_option="+$prop_option;
+		ajax( $url, "2" );
 	}
 }
 function callback( data, callback ){
 	if(data.state == "200"){
-		if( callback == "data_4.yaws 0" ){
+		if( callback == "0" ){
 			$.each( data.msg,function(i, item){
 				$("#currency_1").html( item.currency_1 );
 				$("#currency_2").html( item.currency_2 );
@@ -134,7 +137,7 @@ function callback( data, callback ){
 				$("#currency_4").html( item.currency_4 );
         	});
 			
-		}else if( callback == "data_4.yaws 1" ){
+		}else if( callback == "1" ){
 			$("#economy_table tbody").html( "" );
 			var $economy_option = $("#economy_option").val();
 			var Json;
@@ -153,7 +156,7 @@ function callback( data, callback ){
 				var $tr = "<tr><td>"+itemName+"</td><td>"+item.num+"</td></tr>";
 				$("#economy_table tbody").append( $tr );
 	        });
-		}else if( callback == "data_4.yaws 2" ){
+		}else if( callback == "2" ){
 			$("#prop_table tbody").html( "" );
 			var $prop_option = $("#prop_option").val();
 			var Json;
@@ -285,6 +288,7 @@ function getValue( Key, Json ){
 		
 	</div>
 	<input type="hidden" id = "select_option" value="0" />
+	<input type="hidden" id = "thisPage" value="data_4" />
 <erl>
 out(A) ->
 	{ssi, "../inc/side_bg.inc", "", ""}.

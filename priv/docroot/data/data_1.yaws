@@ -12,7 +12,9 @@ out(A) ->
 var $serverId;
 var $platformId;
 var $select_option;
+var $thisPage;
 $(function(){
+	$thisPage = $("#thisPage").val();
 	$serverId = getCookie( "serverId" );	
 	if( $serverId == "all" ){
 		$("#reg_data .table_css_1 thead th:eq(1)").html( "新增帐号" );
@@ -59,6 +61,15 @@ $(function(){
 })
 
 function option_1(){
+	$serverId = getCookie( "serverId" );	
+	if( $serverId == "all" ){
+		$("#reg_data .table_css_1 thead th:eq(1)").html( "新增帐号" );
+		$("#reg_data .table_css_1 thead th:eq(2)").html( "活跃账户数" );
+	}else{
+		$("#reg_data .table_css_1 thead th:eq(1)").html( "新增角色数" );
+		$("#reg_data .table_css_1 thead th:eq(2)").html( "活跃角色数" );
+	}
+	
 	var $stime = $("#reg_stime").val();
 	var $etime = $("#reg_etime").val();
 	if( $stime == null || $stime == "" ){
@@ -77,9 +88,9 @@ function option_1(){
 		var earray = $etime.split( "-" );
 		var $edate = new Date(earray[0],earray[1]-1,earray[2]);
 
-		var $url = "/action.yaws?action=data_1&select_option="+$select_option+
+		var $url = "/action.yaws?action="+$thisPage+"&select_option="+$select_option+
 								 "&serverId="+$serverId+"&platformId="+$platformId+"&stime="+$sdate.getTime()/1000+"&etime="+$edate.getTime()/1000;
-		ajax( $url, "data_1.yaws 0" );
+		ajax( $url, "0" );
 	}			
 }
 function option_2(){
@@ -106,32 +117,37 @@ function option_2(){
 			var earray = $etime.split( "-" );
 			var $edate = new Date(earray[0],earray[1]-1,earray[2]);
 
-			var $url = "/action.yaws?action=data_1&select_option="+$select_option+
+			var $url = "/action.yaws?action="+$thisPage+"&select_option="+$select_option+
 									 "&serverId="+$serverId+"&platformId="+$platformId+"&stime="+$sdate.getTime()/1000+"&etime="+$edate.getTime()/1000;
-			ajax( $url, "data_1.yaws 1" );
+			ajax( $url, "1" );
 		}	
 	}
 }
 
 function callback( data, callback ){
 	if(data.state == "200"){
-		if( callback == "data_1.yaws 0" ){
+		if( callback == "0" ){
+			var cvg1 = new Array();
+			var cvg2 = new Array();
 			$("#reg_table tbody").html( "" );
 			$.each(data.msg, function(i, item){
 				var d=new Date(item.dayTime*1000);
+				cvg1.push( [now_to_time(d), item.add] );
+				cvg2.push( [now_to_time(d), item.online] );
 				var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.add+"</td><td>"+item.online+"</td><td>";
 				$("#reg_table tbody").append( $tr );
 	        });
+			float( "#reg_svg", [{data:cvg1,label:"角色数",color:2}, {data:cvg2,label:"活跃数",color:3}] );
 		}
-		else if( callback == "data_1.yaws 1" ){
+		else if( callback == "1" ){
 			$("#retention .table_css_1 tbody").html( "" );
 			$.each(data.msg, function(i, item){
 				var d=new Date(item.dayTime*1000);
-				var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.reg+"</td><td>"+item.renum_1+"</td><td>"+Number(item.re_1*100).toFixed(2)+
-					"%</td><td>"+item.renum_2+"</td><td>"+Number(item.re_2*100).toFixed(2)+"%</td><td>"+item.renum_3+"</td><td>"+Number(item.re_3*100).toFixed(2)+
-					"%</td><td>"+item.renum_4+"</td><td>"+Number(item.re_4*100).toFixed(2)+"%</td><td>"+item.renum_5+"</td><td>"+Number(item.re_5*100).toFixed(2)+
-					"%</td><td>"+item.renum_6+"</td><td>"+Number(item.re_6*100).toFixed(2)+"%</td><td>"+item.renum_7+"</td><td>"+Number(item.re_7*100).toFixed(2)+
-					"%</td><td>"+item.renum_8+"</td><td>"+Number(item.re_8*100).toFixed(2)+"%</td><td>"+item.renum_9+"</td><td>"+Number(item.re_9*100).toFixed(2)+
+				var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.reg+"</td><td>"+item.renum_1+"</td><td>"+eval_divide(item.renum_1, item.reg)+
+					"%</td><td>"+item.renum_2+"</td><td>"+eval_divide(item.renum_2, item.reg)+"%</td><td>"+item.renum_3+"</td><td>"+eval_divide(item.renum_3, item.reg)+
+					"%</td><td>"+item.renum_4+"</td><td>"+eval_divide(item.renum_4, item.reg)+"%</td><td>"+item.renum_5+"</td><td>"+eval_divide(item.renum_5, item.reg)+
+					"%</td><td>"+item.renum_6+"</td><td>"+eval_divide(item.renum_6, item.reg)+"%</td><td>"+item.renum_7+"</td><td>"+eval_divide(item.renum_7, item.reg)+
+					"%</td><td>"+item.renum_8+"</td><td>"+eval_divide(item.renum_8, item.reg)+"%</td><td>"+item.renum_9+"</td><td>"+eval_divide(item.renum_9, item.reg)+
 					"%</td></tr>";
 				$("#retention .table_css_1 tbody").append( $tr );
 	        });
@@ -163,7 +179,10 @@ function callback( data, callback ){
 				</li>
 				<br class="clear"/>
 			</ul>
-			<h3 style="position:relative;">详细数据<span style="font-weight:normal;font-size: 14px;line-height:26px;color:red;display:none;" id="reg_msg"></span>
+			<h3 style="position:relative;">趋势图<span style="font-weight:normal;font-size: 14px;line-height:26px;color:red;display:none;" id="reg_msg"></span>
+				<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
+			<div class="container"><div id="reg_svg" class="placeholder"></div></div>
+			<h3 style="position:relative;">详细数据<span style="font-weight:normal;font-size: 14px;line-height:26px;color:red;display:none;"></span>
 				<span style="font-weight:normal;font-size: 14px;line-height: 26px;position: absolute;right: 12px;">导出CVX</span></h3>
 			<table class="table_css_1" id="reg_table">
 				<thead>
@@ -217,6 +236,7 @@ function callback( data, callback ){
 		
 	</div>
 <input type="hidden" id = "select_option" value="0" />
+<input type="hidden" id = "thisPage" value="data_1" />
 <erl>
 out(A) ->
 	{ssi, "../inc/side_bg.inc", "", ""}.

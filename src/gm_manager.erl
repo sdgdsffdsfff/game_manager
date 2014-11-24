@@ -9,7 +9,7 @@
 
 -define( DispatchEvent, 
 	[{"login", gm_session, login}, {"login_out", gm_session, logout}, {"check_session", gm_session, isSession},
-	 {"data_1", gm_data1}, {"data_2", gm_data2},{"data_4", gm_data4}] ).
+	 {"data_1", gm_data1}, {"data_2", gm_data2}, {"data_3", gm_data3}, {"data_4", gm_data4}] ).
 
 api( Event, Args ) ->
 	case lists:keyfind( Event, 1, ?DispatchEvent ) of

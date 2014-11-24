@@ -10,15 +10,11 @@ out(A) ->
 					gm_manager:api( "gm_1_1", {UserName, Uid} );
 
 %%数据统计 data	
-				[{"action", "data_1"}, {"select_option", SelectOption}, {"serverId", ServerName}, {"platformId", PlatformName}, {"stime", Stime}, {"etime", Etime}] ->
-					gm_manager:api( "data_1", {SelectOption, ServerName, PlatformName, Stime, Etime} );
+				[{"action", Action}, {"select_option", SelectOption}, {"serverId", ServerName}, {"platformId", PlatformName}|QueryData] ->
+					gm_manager:api( Action, {SelectOption, ServerName, PlatformName, QueryData} );
 
-				[{"action", "data_2"}, {"select_option", SelectOption}, {"serverId", ServerName}, {"platformId", PlatformName}, {"stime", Stime}, {"etime", Etime}] ->
-					gm_manager:api( "data_2", {SelectOption, ServerName, PlatformName, Stime, Etime} );
-
-
-				[{"action", "data_4"}, {"select_option", SelectOption}, {"serverId", ServerName}, {"platformId", PlatformName}|QueryData] ->
-					gm_manager:api( "data_4", {SelectOption, ServerName, PlatformName, QueryData} );
+				%[{"action", "data_2"}, {"select_option", SelectOption}, {"serverId", ServerName}, {"platformId", PlatformName}|QueryData] ->
+				%	gm_manager:api( "data_2", {SelectOption, ServerName, PlatformName, Stime, Etime} );
 
 				_ ->
 					"{\"state\":\"201\", \"messege\":\"arg error\"}"
