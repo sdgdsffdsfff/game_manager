@@ -32,10 +32,12 @@ webserver:Yaws, 一个Erlang开发的web服务器，http://yaws.hyber.org/
 
 5.启动yaws，在浏览器中输入http://127.0.0.1:8080/ 出现内容表示安装成功
 
-6.进入yaws的根目录，根目录下有一个www文件夹，刚刚访问http://127.0.0.1:8080/进入的页面就在www下。
+6.进入yaws的根目录，根目录下有一个www文件夹，刚刚访问http://127.0.0.1:8080/ 进入的页面就在www下。
 
-7.清空www的文件，把该项目game_manager/priv/docroot/下的文件复制到www文件夹下
+7.清空www的文件，把该项目game_manager/priv/docroot/ 下的文件复制到www文件夹下
 
 8.重启yaws，在yaws控制台中执行gm:init().初始化数据库
 
 9.打开浏览器，输入：http://127.0.0.1:8080/
+
+10.输入账户密码：userName:123 pwd:123

@@ -3,8 +3,17 @@ $(function(){
 	var $serverId = getCookie( "serverId" );
    	if( $serverId != null && $serverId != "" ){
    		$("#serverId .show").html( $("#serverId span[title="+$serverId+"]").html() );
-   		var $platformId = getCookie( "platformId" );
+   		
    		$("#platformId .show").html( $("#platformId span[title="+$platformId+"]").html() );
+   	}else{
+   		setCookie( "serverId", "all", 365 );
+   	}
+   	
+   	var $platformId = getCookie( "platformId" );
+   	if( $platformId != null && $platformId != "" ){
+   		$("#platformId .show").html( $("#platformId span[title="+$platformId+"]").html() );
+   	}else{
+   		setCookie( "platformId", "all", 365 );
    	}
 
 	var $path = window.location.pathname;

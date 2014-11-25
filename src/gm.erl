@@ -12,7 +12,7 @@ init() ->
 	mnesia:create_schema([node()]),
 	mnesia:start(),
 	mnesia:create_table( user,  [{disc_copies, [node()]}, {attributes, record_info(fields, user)}] ),
-	mnesia:dirty_write(user, {user, "123", "123", {101,102,103,104}, 0}).
+	mnesia:dirty_write(user, {user, "123", "123", {101,102,103,104}}).
 
 %%初始化函数
 start() ->
