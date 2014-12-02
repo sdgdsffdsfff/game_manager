@@ -25,8 +25,8 @@ pay_data( _ServerDB, PaltformId, Stime, Etime ) ->
 	AllList = gm_pool:executeDynamic(TimeList, {Sql1, item, "server_list"}),
 	Sql2 = 
 		case PaltformId of
-			"all" -> "SELECT SUM(b.orderMoney), COUNT(*), COUNT(DISTINCT b.uid) FROM `user` AS a, rmb_info AS b WHERE a.createTime >=0 AND a.createTime < 1406748558 AND a.uid = b.uid AND b.`time`>=0 AND b.`time` <1406748558";
-			PaltformId -> "SELECT SUM(b.orderMoney), COUNT(*), COUNT(DISTINCT b.uid) FROM `user` AS a, rmb_info AS b WHERE a.createTime >=0 AND a.createTime < 1406748558 AND a.uid = b.uid AND b.`time`>=0 AND b.`time` <1406748558"
+			"all" -> "SELECT SUM(b.orderMoney), COUNT(*), COUNT(DISTINCT b.uid) FROM `user` AS a, rmb_info AS b WHERE a.createTime >=#DayStime# AND a.createTime < #DayEtime# AND a.uid = b.uid AND b.`time`>=#DayStime# AND b.`time` <#DayEtime#;";
+			PaltformId -> "SELECT SUM(b.orderMoney), COUNT(*), COUNT(DISTINCT b.uid) FROM `user` AS a, rmb_info AS b WHERE a.createTime >=#DayStime# AND a.createTime < #DayEtime# AND a.uid = b.uid AND b.`time`>=#DayStime# AND b.`time` <#DayEtime#;"
 		end,
 	RegList = gm_pool:executeDynamic(TimeList, {Sql2, item, "server_list"}),
 	Fun = fun({{Stime1, 0}, {Stime1, 0}}) ->[Stime1, 0,0,0,0,0,0];

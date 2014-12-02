@@ -143,7 +143,7 @@ function callback( data, callback ){
 			$("#retention .table_css_1 tbody").html( "" );
 			$.each(data.msg, function(i, item){
 				var d=new Date(item.dayTime*1000);
-				var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.reg+"</td><td>"+item.renum_1+"</td><td>"+eval_divide(item.renum_1, item.reg)+
+				var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.reg+"</td><td>"+item.renum_1+"</td><td>"+eval_divide(item.renum_1, item.reg, "%")+
 					"%</td><td>"+item.renum_2+"</td><td>"+eval_divide(item.renum_2, item.reg)+"%</td><td>"+item.renum_3+"</td><td>"+eval_divide(item.renum_3, item.reg)+
 					"%</td><td>"+item.renum_4+"</td><td>"+eval_divide(item.renum_4, item.reg)+"%</td><td>"+item.renum_5+"</td><td>"+eval_divide(item.renum_5, item.reg)+
 					"%</td><td>"+item.renum_6+"</td><td>"+eval_divide(item.renum_6, item.reg)+"%</td><td>"+item.renum_7+"</td><td>"+eval_divide(item.renum_7, item.reg)+

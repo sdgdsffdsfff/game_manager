@@ -43,8 +43,8 @@ economy( ServerDB, _PlatformId, Economy_option, Stime, Etime ) ->
 
 propOption( ServerDB, _PlatformId, PropOption ) ->
 	Sql =case PropOption of
-		"0" -> "SELECT tableId, SUM(num) FROM item GROUP BY tableId";
-		"1" -> "SELECT tableId, SUM(uid) FROM skill GROUP BY tableId";
-		"2" -> "SELECT mateId, SUM(mateId) FROM mate_attr GROUP BY mateId"
+		"0" -> "SELECT tableId, count(num) FROM item GROUP BY tableId";
+		"1" -> "SELECT tableId, count(uid) FROM skill GROUP BY tableId";
+		"2" -> "SELECT mateId, count(mateId) FROM mate_attr GROUP BY mateId"
 	end,
 	gm_pool:executeDynamic( {0, 0}, {Sql, item, ServerDB} ).

@@ -69,7 +69,7 @@ function callback( data, callback ){
 			$.each(data.msg, function(i, item){
 				var d=new Date(item.dayTime*1000);
 
-				var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.all+"</td><td>"+item.allnum+"</td><td>"+item.allrole+"</td><td>"+eval_divide(item.all, item.allrole)
+				var $tr = "<tr><td>"+now_to_time(d)+"</td><td>"+item.all+"</td><td>"+item.allnum+"</td><td>"+item.allrole+"</td><td>"+eval_divide(item.all, item.allrole, null)
 							+"</td><td>"+item.reg+"</td><td>"+item.regnum+"</td><td>"+item.regrole+"</td></tr>";
 				$("#pay_table tbody").append( $tr );
 			

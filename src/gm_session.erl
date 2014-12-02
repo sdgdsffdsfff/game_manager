@@ -3,7 +3,7 @@
 
 -module(gm_session).
 
--include("yaws_api.hrl").
+-include("../include/yaws_api.hrl").
 -include( "../include/gm.hrl" ).
 
 -export( [login/1, logout/1, isSession/1] ).

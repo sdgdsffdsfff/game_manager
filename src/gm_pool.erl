@@ -25,7 +25,9 @@ executeStatic(Value) ->
 executeDynamic( {Stime, Etime}, {Sql, Action, ServerDB} ) ->
 	ReSql1 = re:replace(Sql, "#DayStime#", integer_to_list(Stime), [{return, list}]),
 	ReSql2 = re:replace(ReSql1, "#DayEtime#", integer_to_list(Etime), [{return, list}]),
-	case execute(ServerDB, ReSql2) of
+	ReSql3 = re:replace(ReSql2, "#DayStime#", integer_to_list(Stime), [{return, list}]),
+	ReSql4 = re:replace(ReSql3, "#DayEtime#", integer_to_list(Etime), [{return, list}]),
+	case execute(ServerDB, ReSql4) of
 		  	ok -> 0; %sql报错
 		  	[[undefined]] -> 0;% 计算为空
 			[] ->  0;%查询结果为空

@@ -100,13 +100,18 @@ function now_to_time(now){
 }
 
 
-function eval_divide( Key, Value ){
+function eval_divide( Key, Value, action ){
     if(Key == 0){
         return "0.00";
     }else if( Value == 0 ){
         return "0.00";
     }else{
-        return Number(Key/Value).toFixed(2);
+        if(action == "%"){
+            return Number(Key/Value)*100.toFixed(2);
+        }else{
+            return Number(Key/Value).toFixed(2);
+        }
+        
     }
 }
 
