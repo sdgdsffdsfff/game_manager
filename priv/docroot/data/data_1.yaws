@@ -7,6 +7,7 @@ out(A) ->
 </erl>
 <link rel="stylesheet" type="text/css" href="../css/content.css" />
 <script type="text/javascript" src="../lib/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../lib/jquery-ui/zh_CN.js"></script>
 <link rel="stylesheet" type="text/css" href="../lib/jquery-ui/jquery-ui.css" />
 <script type="text/javascript">
 var $serverId;

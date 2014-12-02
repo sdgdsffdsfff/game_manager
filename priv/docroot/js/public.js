@@ -107,7 +107,7 @@ function eval_divide( Key, Value, action ){
         return "0.00";
     }else{
         if(action == "%"){
-            return Number(Key/Value)*100.toFixed(2);
+            return Number((Key/Value)*100).toFixed(2);
         }else{
             return Number(Key/Value).toFixed(2);
         }
