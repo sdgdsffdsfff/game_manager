@@ -15,15 +15,22 @@ out(A) ->
 <title>数据查询</title>
 </head>
 <body>
-<erl>
-	out(A) ->
-	{ServerId, PlatformId} = case gm_fun:read_config() of
+	<erl>
+		out(A) ->
+		{ServerId, PlatformId} = case gm_fun:read_config() of
 			{error, _Other} -> {"", ""};
 			{ok, [[_ServerList, GameMsg, PlatMsg]]} ->
-				{["<span title=\""++Id++"\">"++Id++"服("++Name++")</span>"||{Id, Name, _A1,_A2,_A3,_A4,_A5}<-GameMsg], ["<span title=\""++Id++"\">"++Id++"服("++Name++")</span>"||{Id, Name}<-PlatMsg]}
+			Fun = fun(Arg) ->
+				{Id, Name} = case Arg of
+					{Id1, Name1,_A1,_A2,_A3,_A4,_A5} -> {unicode:characters_to_binary(Id1), unicode:characters_to_binary(Name1)};
+					{Id1, Name1} -> {unicode:characters_to_binary(Id1), unicode:characters_to_binary(Name1)}
+				end,
+				<<"<span title=\""/utf8, Id/binary,"\">"/utf8,Id/binary,"服("/utf8,Name/binary,")</span>"/utf8>>
+			end,
+			{lists:map(Fun, GameMsg),lists:map(Fun, PlatMsg)}
 		end,
-	{ssi, "../inc/nav_head_master.inc", "%%", [{"serverId", ServerId}, {"platformId", PlatformId}]}.
-</erl>
+		{ssi, "../inc/nav_head_master.inc", "%%", [{"serverId", ServerId}, {"platformId", PlatformId}]}.
+	</erl>
 
 <div id="content" class="wtcenter">
 	<div class="container_hd"><h2>数据查询</h2></div>
