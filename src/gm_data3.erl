@@ -38,11 +38,11 @@ camp(ServerDB, PaltformId) ->
 		end,
 	gm_pool:executeDynamic( {0, 0}, {Sql, item, ServerDB} ).
 
-task( ServerDB, PaltformId ) ->
-	Sql = case PaltformId of
-			"all" ->
-				"SELECT lv, COUNT(*) FROM attr WHERE uid > 162 GROUP BY lv;";
-			PaltformId ->
-				"SELECT lv, COUNT(*) FROM attr WHERE uid > 162 AND platformId = "++PaltformId++" GROUP BY lv;"
-		end,
-	gm_pool:executeDynamic( {0, 0}, {Sql, item, ServerDB} ).
+%% task( ServerDB, PaltformId ) ->
+%% 	Sql = case PaltformId of
+%% 			"all" ->
+%% 				"SELECT lv, COUNT(*) FROM attr WHERE uid > 162 GROUP BY lv;";
+%% 			PaltformId ->
+%% 				"SELECT lv, COUNT(*) FROM attr WHERE uid > 162 AND platformId = "++PaltformId++" GROUP BY lv;"
+%% 		end,
+%% 	gm_pool:executeDynamic( {0, 0}, {Sql, item, ServerDB} ).

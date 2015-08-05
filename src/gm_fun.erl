@@ -92,6 +92,6 @@ json( KeyList, ValueList ) when is_integer(hd( ValueList ))->
 json( KeyList, ValueList ) ->
 	Fun = fun( Value ) ->
 				TupleList = lists:zip( KeyList, Value ),
-				{obj, [{Key, ?AllTOBinary(Value)}||{Key, Value}<- TupleList]}
+				{obj, [{Key, ?AllTOBinary(Value1)}||{Key, Value1}<- TupleList]}
 		  	end,
 	lists:map( Fun, ValueList ).

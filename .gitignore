@@ -46,6 +46,5 @@ Temporary Items
 .idea
 ebin
 *.dump
-*.iml
 out
 .rebar
